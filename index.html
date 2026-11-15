@@ -214,14 +214,14 @@
                                     <span>Naslov - Pozicija X:</span>
                                     <span id="valTitleX" class="text-amber-400 font-bold">0px</span>
                                 </div>
-                                <input type="range" id="inputTitleX" min="-100" max="100" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
+                                <input type="range" id="inputTitleX" min="-400" max="400" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
                             </div>
                             <div>
                                 <div class="flex justify-between text-[11px] text-amber-200/70 mb-1">
                                     <span>Naslov - Pozicija Y:</span>
                                     <span id="valTitleY" class="text-amber-400 font-bold">0px</span>
                                 </div>
-                                <input type="range" id="inputTitleY" min="-100" max="100" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
+                                <input type="range" id="inputTitleY" min="-400" max="400" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
                             </div>
                         </div>
 
@@ -231,23 +231,22 @@
                                     <span>Tekst - Pozicija X:</span>
                                     <span id="valBodyX" class="text-amber-400 font-bold">0px</span>
                                 </div>
-                                <input type="range" id="inputBodyX" min="-100" max="100" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
+                                <input type="range" id="inputBodyX" min="-400" max="400" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
                             </div>
                             <div>
                                 <div class="flex justify-between text-[11px] text-amber-200/70 mb-1">
                                     <span>Tekst - Pozicija Y:</span>
                                     <span id="valBodyY" class="text-amber-400 font-bold">0px</span>
                                 </div>
-                                <input type="range" id="inputBodyY" min="-100" max="100" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
+                                <input type="range" id="inputBodyY" min="-400" max="400" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
                             </div>
                         </div>
                     </div>
 
-                    <!-- NOVO: Podešavanje naslova do 400 i minus 400 -->
+                    <!-- Podešavanje naslova (-400 do 400) -->
                     <div class="bg-[#181126] p-3.5 rounded-xl border border-amber-500/20 space-y-3">
                         <p class="text-xs font-semibold text-amber-300 font-['Playfair_Display',serif]">⚙️ Podešavanje naslova (-400 do 400)</p>
 
-                        <!-- Širina naslova -->
                         <div class="space-y-1">
                             <div class="flex justify-between text-[11px] text-amber-200/70">
                                 <span>Širina / Ograničenje naslova:</span>
@@ -256,7 +255,6 @@
                             <input type="range" id="inputTitleWidth" min="-400" max="400" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
                         </div>
 
-                        <!-- Razmak između slova -->
                         <div class="space-y-1">
                             <div class="flex justify-between text-[11px] text-amber-200/70">
                                 <span>Razmak slova (Letter Spacing):</span>
@@ -265,7 +263,6 @@
                             <input type="range" id="inputTitleSpacing" min="-50" max="100" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
                         </div>
 
-                        <!-- Prored / Linijska visina -->
                         <div class="space-y-1">
                             <div class="flex justify-between text-[11px] text-amber-200/70">
                                 <span>Prored naslova (Line Height):</span>
@@ -274,17 +271,16 @@
                             <input type="range" id="inputTitleLineHeight" min="0.5" max="3" step="0.05" value="1.2" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
                         </div>
 
-                        <!-- Margina ispod naslova -->
                         <div class="space-y-1">
                             <div class="flex justify-between text-[11px] text-amber-200/70">
                                 <span>Margina ispod naslova:</span>
                                 <span id="valTitleMargin" class="text-amber-400 font-bold">24px</span>
                             </div>
-                            <input type="range" id="inputTitleMargin" min="-100" max="400" value="24" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
+                            <input type="range" id="inputTitleMargin" min="-400" max="400" value="24" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
                         </div>
                     </div>
 
-                    <!-- Frame & Image Upload with Custom Size & Position -->
+                    <!-- Frame & Image Upload with Custom Size & Position (-400 do 400 za X i Y) -->
                     <div class="pt-2 border-t border-amber-500/20 space-y-3">
                         <div class="flex justify-between items-center">
                             <span class="text-xs font-semibold text-amber-200">Canva Okvir (Frame) i Slika</span>
@@ -300,7 +296,6 @@
                         <div id="imageControls" class="space-y-3">
                             <input type="file" accept="image/*" onchange="handleImageUpload(event)" class="w-full text-xs text-stone-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-600 file:text-stone-950 hover:file:bg-amber-500 cursor-pointer font-bold">
 
-                            <!-- Sliders for Frame Size & Position -->
                             <div class="bg-[#181126] p-3 rounded-xl border border-amber-500/20 space-y-2">
                                 <div class="flex justify-between text-xs text-amber-200/70">
                                     <span>Veličina okvira (Širina %):</span>
@@ -309,10 +304,16 @@
                                 <input type="range" id="inputFrameWidth" min="30" max="100" value="80" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
 
                                 <div class="flex justify-between text-xs text-amber-200/70 pt-1">
-                                    <span>Pozicija levo-desno (X):</span>
-                                    <span id="valFramePosX" class="text-amber-400 font-bold">Centar</span>
+                                    <span>Slika - Pozicija Levo/Desno (X):</span>
+                                    <span id="valFramePosX" class="text-amber-400 font-bold">0px</span>
                                 </div>
-                                <input type="range" id="inputFramePosX" min="0" max="100" value="50" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
+                                <input type="range" id="inputFramePosX" min="-400" max="400" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
+
+                                <div class="flex justify-between text-xs text-amber-200/70 pt-1">
+                                    <span>Slika - Pozicija Gore/Dole (Y):</span>
+                                    <span id="valFramePosY" class="text-amber-400 font-bold">0px</span>
+                                </div>
+                                <input type="range" id="inputFramePosY" min="-400" max="400" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
                             </div>
 
                             <div class="flex gap-2">
@@ -384,7 +385,7 @@
                             </p>
 
                             <!-- Flexible Resizable Frame Container -->
-                            <div id="renderFrameWrapper" class="w-full flex">
+                            <div id="renderFrameWrapper" class="w-full flex relative">
                                 <div id="renderFrameElement" class="overflow-hidden shadow-2xl flex items-center justify-center bg-stone-300 relative">
                                     <img id="renderImage" src="" class="w-full h-full object-cover" alt="Slide image">
                                 </div>
@@ -451,7 +452,8 @@
                         frame: "none", 
                         image: "", 
                         frameWidth: 80, 
-                        framePosX: 50,
+                        framePosX: 0,
+                        framePosY: 0,
                         titleSize: 60,
                         bodySize: 30,
                         titleX: 0,
@@ -589,8 +591,11 @@
             document.getElementById('inputFrameWidth').value = slide.frameWidth !== undefined ? slide.frameWidth : 80;
             document.getElementById('valFrameWidth').innerText = (slide.frameWidth || 80) + '%';
             
-            document.getElementById('inputFramePosX').value = slide.framePosX !== undefined ? slide.framePosX : 50;
-            document.getElementById('valFramePosX').innerText = (slide.framePosX || 50) + '%';
+            document.getElementById('inputFramePosX').value = slide.framePosX !== undefined ? slide.framePosX : 0;
+            document.getElementById('valFramePosX').innerText = (slide.framePosX || 0) + 'px';
+
+            document.getElementById('inputFramePosY').value = slide.framePosY !== undefined ? slide.framePosY : 0;
+            document.getElementById('valFramePosY').innerText = (slide.framePosY || 0) + 'px';
 
             document.getElementById('inputTitleSize').value = slide.titleSize || 60;
             document.getElementById('valTitleSize').innerText = (slide.titleSize || 60) + 'px';
@@ -635,7 +640,10 @@
             document.getElementById('valFrameWidth').innerText = slide.frameWidth + '%';
 
             slide.framePosX = parseInt(document.getElementById('inputFramePosX').value);
-            document.getElementById('valFramePosX').innerText = slide.framePosX + '%';
+            document.getElementById('valFramePosX').innerText = slide.framePosX + 'px';
+
+            slide.framePosY = parseInt(document.getElementById('inputFramePosY').value);
+            document.getElementById('valFramePosY').innerText = slide.framePosY + 'px';
 
             slide.titleSize = parseInt(document.getElementById('inputTitleSize').value);
             document.getElementById('valTitleSize').innerText = slide.titleSize + 'px';
@@ -732,7 +740,7 @@
             bodyEl.style.transform = `translate(${slide.bodyX || 0}px, ${slide.bodyY || 0}px)`;
             bodyEl.style.display = slide.body ? 'block' : 'none';
 
-            // Frame & Image
+            // Frame & Image with Position X and Y
             const wrapper = document.getElementById('renderFrameWrapper');
             const frameEl = document.getElementById('renderFrameElement');
             const imgEl = document.getElementById('renderImage');
@@ -741,10 +749,11 @@
                 wrapper.style.display = 'none';
             } else {
                 wrapper.style.display = 'flex';
-                wrapper.style.justifyContent = slide.framePosX === 0 ? 'flex-start' : (slide.framePosX === 100 ? 'flex-end' : 'center');
+                wrapper.style.justifyContent = 'center';
                 
                 frameEl.style.width = (slide.frameWidth || 80) + '%';
                 frameEl.style.height = '450px';
+                frameEl.style.transform = `translate(${slide.framePosX || 0}px, ${slide.framePosY || 0}px)`;
 
                 if (slide.frame === 'rounded') {
                     frameEl.style.borderRadius = '24px';
@@ -811,7 +820,8 @@
                 frame: "none",
                 image: "",
                 frameWidth: 80,
-                framePosX: 50,
+                framePosX: 0,
+                framePosY: 0,
                 titleSize: 60,
                 bodySize: 30,
                 titleX: 0,
@@ -875,7 +885,8 @@
                         frame: "none",
                         image: "",
                         frameWidth: 80,
-                        framePosX: 50,
+                        framePosX: 0,
+                        framePosY: 0,
                         titleSize: 60,
                         bodySize: 30,
                         titleX: 0,
@@ -935,7 +946,7 @@
                         caption = line.replace('CAPTION:', '').trim();
                     } else if (line.startsWith('--- Slajd')) {
                         if (currentSlide) slides.push(currentSlide);
-                        currentSlide = { badge: '', title: '', body: '', cta: '💡 Sačuvaj objavu!', frame: 'none', image: '', frameWidth: 80, framePosX: 50, titleSize: 60, bodySize: 30, titleX: 0, titleY: 0, bodyX: 0, bodyY: 0, titleWidth: 0, titleSpacing: 0, titleLineHeight: 1.2, titleMargin: 24 };
+                        currentSlide = { badge: '', title: '', body: '', cta: '💡 Sačuvaj objavu!', frame: 'none', image: '', frameWidth: 80, framePosX: 0, framePosY: 0, titleSize: 60, bodySize: 30, titleX: 0, titleY: 0, bodyX: 0, bodyY: 0, titleWidth: 0, titleSpacing: 0, titleLineHeight: 1.2, titleMargin: 24 };
                     } else if (currentSlide) {
                         if (line.startsWith('BADGE:')) currentSlide.badge = line.replace('BADGE:', '').trim();
                         if (line.startsWith('TITLE:')) currentSlide.title = line.replace('TITLE:', '').trim();
@@ -945,7 +956,7 @@
                 });
                 if (currentSlide) slides.push(currentSlide);
                 if (slides.length === 0) {
-                    slides.push({ badge: 'Edukacija', title: 'Naslov', body: 'Opis', cta: '💡 Sačuvaj objavu!', frame: 'none', image: '', frameWidth: 80, framePosX: 50, titleSize: 60, bodySize: 30, titleX: 0, titleY: 0, bodyX: 0, bodyY: 0, titleWidth: 0, titleSpacing: 0, titleLineHeight: 1.2, titleMargin: 24 });
+                    slides.push({ badge: 'Edukacija', title: 'Naslov', body: 'Opis', cta: '💡 Sačuvaj objavu!', frame: 'none', image: '', frameWidth: 80, framePosX: 0, framePosY: 0, titleSize: 60, bodySize: 30, titleX: 0, titleY: 0, bodyX: 0, bodyY: 0, titleWidth: 0, titleSpacing: 0, titleLineHeight: 1.2, titleMargin: 24 });
                 }
                 newCarousels.push({ caption, slides });
             });
@@ -1030,7 +1041,7 @@
                 }
             }
 
-            zip.generateAsync({ type: "blob" }).then(content => {
+.zip.generateAsync({ type: "blob" }).then(content => {
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(content);
                 link.download = `svi-karuseli-marijana-digital-soul.zip`;
