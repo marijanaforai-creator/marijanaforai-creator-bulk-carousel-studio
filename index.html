@@ -187,7 +187,7 @@
                         <textarea id="inputBody" rows="3" oninput="updateActiveSlideData()" class="w-full bg-[#181126] border border-amber-500/30 rounded-xl p-2.5 text-sm text-stone-200 focus:border-amber-400 outline-none"></textarea>
                     </div>
 
-                    <!-- NOVO: Specifična pozadina za ovaj slajd -->
+                    <!-- Pozadina ovog slajda -->
                     <div class="bg-[#181126] p-3.5 rounded-xl border border-amber-500/20 space-y-2">
                         <div class="flex justify-between items-center">
                             <span class="text-xs font-semibold text-amber-300">🎨 Pozadina ovog slajda (opciono)</span>
@@ -485,6 +485,29 @@
                         titleMargin: 24,
                         useCustomBg: false,
                         slideBg: '#FAF8F5'
+                    },
+                    { 
+                        badge: "Korak 1", 
+                        title: "Definiši svoju ciljnu publiku", 
+                        body: "Kome tačno pomažeš i koji problem rešavaš?", 
+                        cta: "💡 Sačuvaj objavu!", 
+                        frame: "none", 
+                        image: "", 
+                        frameWidth: 80, 
+                        framePosX: 0,
+                        framePosY: 0,
+                        titleSize: 60,
+                        bodySize: 30,
+                        titleX: 0,
+                        titleY: 0,
+                        bodyX: 0,
+                        bodyY: 0,
+                        titleWidth: 0,
+                        titleSpacing: 0,
+                        titleLineHeight: 1.2,
+                        titleMargin: 24,
+                        useCustomBg: false,
+                        slideBg: '#FAF8F5'
                     }
                 ]
             }
@@ -637,23 +660,23 @@
             document.getElementById('inputFramePosY').value = slide.framePosY !== undefined ? slide.framePosY : 0;
             document.getElementById('valFramePosY').innerText = (slide.framePosY || 0) + 'px';
 
-            document.getElementById('inputTitleSize').value = slide.titleSize || 60;
-            document.getElementById('valTitleSize').innerText = (slide.titleSize || 60) + 'px';
+            document.getElementById('inputTitleSize').value = slide.titleSize !== undefined ? slide.titleSize : 60;
+            document.getElementById('valTitleSize').innerText = (slide.titleSize !== undefined ? slide.titleSize : 60) + 'px';
 
-            document.getElementById('inputBodySize').value = slide.bodySize || 30;
-            document.getElementById('valBodySize').innerText = (slide.bodySize || 30) + 'px';
+            document.getElementById('inputBodySize').value = slide.bodySize !== undefined ? slide.bodySize : 30;
+            document.getElementById('valBodySize').innerText = (slide.bodySize !== undefined ? slide.bodySize : 30) + 'px';
 
-            document.getElementById('inputTitleX').value = slide.titleX || 0;
-            document.getElementById('valTitleX').innerText = (slide.titleX || 0) + 'px';
+            document.getElementById('inputTitleX').value = slide.titleX !== undefined ? slide.titleX : 0;
+            document.getElementById('valTitleX').innerText = (slide.titleX !== undefined ? slide.titleX : 0) + 'px';
 
-            document.getElementById('inputTitleY').value = slide.titleY || 0;
-            document.getElementById('valTitleY').innerText = (slide.titleY || 0) + 'px';
+            document.getElementById('inputTitleY').value = slide.titleY !== undefined ? slide.titleY : 0;
+            document.getElementById('valTitleY').innerText = (slide.titleY !== undefined ? slide.titleY : 0) + 'px';
 
-            document.getElementById('inputBodyX').value = slide.bodyX || 0;
-            document.getElementById('valBodyX').innerText = (slide.bodyX || 0) + 'px';
+            document.getElementById('inputBodyX').value = slide.bodyX !== undefined ? slide.bodyX : 0;
+            document.getElementById('valBodyX').innerText = (slide.bodyX !== undefined ? slide.bodyX : 0) + 'px';
 
-            document.getElementById('inputBodyY').value = slide.bodyY || 0;
-            document.getElementById('valBodyY').innerText = (slide.bodyY || 0) + 'px';
+            document.getElementById('inputBodyY').value = slide.bodyY !== undefined ? slide.bodyY : 0;
+            document.getElementById('valBodyY').innerText = (slide.bodyY !== undefined ? slide.bodyY : 0) + 'px';
 
             document.getElementById('inputTitleWidth').value = slide.titleWidth !== undefined ? slide.titleWidth : 0;
             document.getElementById('valTitleWidth').innerText = slide.titleWidth !== undefined ? slide.titleWidth : 0;
@@ -1148,7 +1171,7 @@
 
             if (slide.title) {
                 ctx.fillStyle = headingColor;
-                const tSize = slide.titleSize || 60;
+                const tSize = slide.titleSize !== undefined ? slide.titleSize : 60;
                 const tLineHeight = (slide.titleLineHeight !== undefined ? slide.titleLineHeight : 1.2) * tSize;
                 const titleFontName = document.getElementById('fontTitleSelect').value.replace(/'/g, "").split(',')[0].trim();
                 ctx.font = `bold ${tSize}px "${titleFontName}", serif`;
@@ -1179,7 +1202,7 @@
 
             if (slide.body) {
                 ctx.fillStyle = textColor;
-                const bSize = slide.bodySize || 30;
+                const bSize = slide.bodySize !== undefined ? slide.bodySize : 30;
                 ctx.font = `${bSize}px "DM Sans", sans-serif`;
                 
                 const bWords = slide.body.split(' ');
