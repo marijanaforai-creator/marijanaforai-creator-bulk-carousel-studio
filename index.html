@@ -243,11 +243,11 @@
                         </div>
                     </div>
 
-                    <!-- NOVO: Napredno podešavanje naslova do 400 i minus 400 -->
+                    <!-- NOVO: Podešavanje naslova do 400 i minus 400 -->
                     <div class="bg-[#181126] p-3.5 rounded-xl border border-amber-500/20 space-y-3">
-                        <p class="text-xs font-semibold text-amber-300 font-['Playfair_Display',serif]">⚙️ Napredno podešavanje naslova (-400 do 400)</p>
+                        <p class="text-xs font-semibold text-amber-300 font-['Playfair_Display',serif]">⚙️ Podešavanje naslova (-400 do 400)</p>
 
-                        <!-- Širina naslova (Width / Max-width offset) -->
+                        <!-- Širina naslova -->
                         <div class="space-y-1">
                             <div class="flex justify-between text-[11px] text-amber-200/70">
                                 <span>Širina / Ograničenje naslova:</span>
@@ -256,7 +256,7 @@
                             <input type="range" id="inputTitleWidth" min="-400" max="400" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
                         </div>
 
-                        <!-- Razmak između slova (Letter spacing) -->
+                        <!-- Razmak između slova -->
                         <div class="space-y-1">
                             <div class="flex justify-between text-[11px] text-amber-200/70">
                                 <span>Razmak slova (Letter Spacing):</span>
@@ -265,7 +265,7 @@
                             <input type="range" id="inputTitleSpacing" min="-50" max="100" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
                         </div>
 
-                        <!-- Prored / Linijska visina (Line Height) -->
+                        <!-- Prored / Linijska visina -->
                         <div class="space-y-1">
                             <div class="flex justify-between text-[11px] text-amber-200/70">
                                 <span>Prored naslova (Line Height):</span>
@@ -587,7 +587,7 @@
             document.getElementById('inputCaption').value = caption || '';
 
             document.getElementById('inputFrameWidth').value = slide.frameWidth !== undefined ? slide.frameWidth : 80;
-            document.getElementById('valFrameWidth5') || (document.getElementById('valFrameWidth').innerText = (slide.frameWidth || 80) + '%');
+            document.getElementById('valFrameWidth').innerText = (slide.frameWidth || 80) + '%';
             
             document.getElementById('inputFramePosX').value = slide.framePosX !== undefined ? slide.framePosX : 50;
             document.getElementById('valFramePosX').innerText = (slide.framePosX || 50) + '%';
@@ -610,7 +610,6 @@
             document.getElementById('inputBodyY').value = slide.bodyY || 0;
             document.getElementById('valBodyY').innerText = (slide.bodyY || 0) + 'px';
 
-            // NOVO: Učitavanje naprednih podešavanja naslova
             document.getElementById('inputTitleWidth').value = slide.titleWidth !== undefined ? slide.titleWidth : 0;
             document.getElementById('valTitleWidth').innerText = slide.titleWidth !== undefined ? slide.titleWidth : 0;
 
@@ -656,7 +655,6 @@
             slide.bodyY = parseInt(document.getElementById('inputBodyY').value);
             document.getElementById('valBodyY').innerText = slide.bodyY + 'px';
 
-            // NOVO: Čuvanje vrednosti naprednih podešavanja naslova (-400 do 400)
             slide.titleWidth = parseInt(document.getElementById('inputTitleWidth').value);
             document.getElementById('valTitleWidth').innerText = slide.titleWidth;
 
@@ -716,10 +714,8 @@
             titleEl.style.fontSize = (slide.titleSize || 60) + 'px';
             titleEl.style.transform = `translate(${slide.titleX || 0}px, ${slide.titleY || 0}px)`;
 
-            // NOVO: Primena naprednih stilova na naslov (do 400 i minus 400)
             const tWidth = slide.titleWidth || 0;
             if (tWidth !== 0) {
-                // Ako je u plusu ili minusu, menjamo max-width ili širinu
                 titleEl.style.maxWidth = `calc(100% + ${tWidth}px)`;
             } else {
                 titleEl.style.maxWidth = '100%';
@@ -783,4 +779,382 @@
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.
+                reader.onload = function(e) {
+                    carousels[currentCarouselIndex].slides[currentSlideIndex].image = e.target.result;
+                    updatePreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeImageFromSlide() {
+            carousels[currentCarouselIndex].slides[currentSlideIndex].image = '';
+            updatePreview();
+        }
+
+        function applyImageToAllSlides() {
+            const currentImg = carousels[currentCarouselIndex].slides[currentSlideIndex].image;
+            const currentFrame = carousels[currentCarouselIndex].slides[currentSlideIndex].frame;
+            carousels[currentCarouselIndex].slides.forEach(s => {
+                s.image = currentImg;
+                s.frame = currentFrame;
+            });
+            alert('Slika i okvir su primenjeni na sve slajdove ovog karusela!');
+        }
+
+        function addSlideToCurrent() {
+            carousels[currentCarouselIndex].slides.push({
+                badge: "Digitalni Proizvodi",
+                title: "Novi korak u procesu",
+                body: "Dodaj opis ovog koraka ovde...",
+                cta: "💡 Sačuvaj objavu!",
+                frame: "none",
+                image: "",
+                frameWidth: 80,
+                framePosX: 50,
+                titleSize: 60,
+                bodySize: 30,
+                titleX: 0,
+                titleY: 0,
+                bodyX: 0,
+                bodyY: 0,
+                titleWidth: 0,
+                titleSpacing: 0,
+                titleLineHeight: 1.2,
+                titleMargin: 24
+            });
+            currentSlideIndex = carousels[currentCarouselIndex].slides.length - 1;
+            renderSlideTabs();
+            loadSlideToForm();
+            updatePreview();
+            renderCarouselTabs();
+        }
+
+        function removeCurrentSlide() {
+            if (carousels[currentCarouselIndex].slides.length <= 1) {
+                alert('Karusel mora imati bar jedan slajd!');
+                return;
+            }
+            carousels[currentCarouselIndex].slides.splice(currentSlideIndex, 1);
+            if (currentSlideIndex >= carousels[currentCarouselIndex].slides.length) {
+                currentSlideIndex = carousels[currentCarouselIndex].slides.length - 1;
+            }
+            renderSlideTabs();
+            loadSlideToForm();
+            updatePreview();
+            renderCarouselTabs();
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                renderSlideTabs();
+                loadSlideToForm();
+                updatePreview();
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex < carousels[currentCarouselIndex].slides.length - 1) {
+                currentSlideIndex++;
+                renderSlideTabs();
+                loadSlideToForm();
+                updatePreview();
+            }
+        }
+
+        function addNewCarousel() {
+            carousels.push({
+                caption: "🚀 Novi karusel objava!\n\n#MarijanaAIDigitalSoul",
+                slides: [
+                    {
+                        badge: "Edukacija",
+                        title: "Naslov novog karusela",
+                        body: "Početni opis...",
+                        cta: "💡 Sačuvaj objavu!",
+                        frame: "none",
+                        image: "",
+                        frameWidth: 80,
+                        framePosX: 50,
+                        titleSize: 60,
+                        bodySize: 30,
+                        titleX: 0,
+                        titleY: 0,
+                        bodyX: 0,
+                        bodyY: 0,
+                        titleWidth: 0,
+                        titleSpacing: 0,
+                        titleLineHeight: 1.2,
+                        titleMargin: 24
+                    }
+                ]
+            });
+            currentCarouselIndex = carousels.length - 1;
+            currentSlideIndex = 0;
+            renderCarouselTabs();
+            renderSlideTabs();
+            loadSlideToForm();
+            updatePreview();
+        }
+
+        function openBulkModal() {
+            let text = "";
+            carousels.forEach((c, idx) => {
+                text += `=== KARUSEL ${idx + 1} ===\n`;
+                text += `CAPTION: ${c.caption || ''}\n`;
+                c.slides.forEach((s, sIdx) => {
+                    text += `--- Slajd ${sIdx + 1} ---\n`;
+                    text += `BADGE: ${s.badge || ''}\n`;
+                    text += `TITLE: ${s.title || ''}\n`;
+                    text += `BODY: ${s.body || ''}\n`;
+                    text += `CTA: ${s.cta || ''}\n`;
+                });
+                text += "\n\n";
+            });
+            document.getElementById('bulkTextarea').value = text;
+            document.getElementById('bulkModal').classList.remove('hidden');
+        }
+
+        function closeBulkModal() {
+            document.getElementById('bulkModal').classList.add('hidden');
+        }
+
+        function processBulkInput() {
+            const raw = document.getElementById('bulkTextarea').value;
+            const carouselChunks = raw.split(/=== KARUSEL/i).filter(Boolean);
+            const newCarousels = [];
+
+            carouselChunks.forEach(chunk => {
+                const lines = chunk.split('\n');
+                let caption = "";
+                let slides = [];
+                let currentSlide = null;
+
+                lines.forEach(line => {
+                    if (line.startsWith('CAPTION:')) {
+                        caption = line.replace('CAPTION:', '').trim();
+                    } else if (line.startsWith('--- Slajd')) {
+                        if (currentSlide) slides.push(currentSlide);
+                        currentSlide = { badge: '', title: '', body: '', cta: '💡 Sačuvaj objavu!', frame: 'none', image: '', frameWidth: 80, framePosX: 50, titleSize: 60, bodySize: 30, titleX: 0, titleY: 0, bodyX: 0, bodyY: 0, titleWidth: 0, titleSpacing: 0, titleLineHeight: 1.2, titleMargin: 24 };
+                    } else if (currentSlide) {
+                        if (line.startsWith('BADGE:')) currentSlide.badge = line.replace('BADGE:', '').trim();
+                        if (line.startsWith('TITLE:')) currentSlide.title = line.replace('TITLE:', '').trim();
+                        if (line.startsWith('BODY:')) currentSlide.body = line.replace('BODY:', '').trim();
+                        if (line.startsWith('CTA:')) currentSlide.cta = line.replace('CTA:', '').trim();
+                    }
+                });
+                if (currentSlide) slides.push(currentSlide);
+                if (slides.length === 0) {
+                    slides.push({ badge: 'Edukacija', title: 'Naslov', body: 'Opis', cta: '💡 Sačuvaj objavu!', frame: 'none', image: '', frameWidth: 80, framePosX: 50, titleSize: 60, bodySize: 30, titleX: 0, titleY: 0, bodyX: 0, bodyY: 0, titleWidth: 0, titleSpacing: 0, titleLineHeight: 1.2, titleMargin: 24 });
+                }
+                newCarousels.push({ caption, slides });
+            });
+
+            if (newCarousels.length > 0) {
+                carousels = newCarousels;
+                currentCarouselIndex = 0;
+                currentSlideIndex = 0;
+                renderCarouselTabs();
+                renderSlideTabs();
+                loadSlideToForm();
+                updatePreview();
+                closeBulkModal();
+                alert('Uspešno uvezeni karuseli!');
+            } else {
+                alert('Format unosa nije prepoznat. Proverite tekst.');
+            }
+        }
+
+        function copyCaption() {
+            const text = document.getElementById('inputCaption').value;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Instagram opis je kopiran u memoriju!');
+            });
+        }
+
+        function insertIntoCaption(snippet) {
+            const textarea = document.getElementById('inputCaption');
+            textarea.value += "\n" + snippet;
+            updateCaptionData();
+        }
+
+        async function downloadCurrentCarouselZip() {
+            const zip = new JSZip();
+            const canvas = document.getElementById('exportCanvas');
+            const ctx = canvas.getContext('2d');
+            const totalSlides = carousels[currentCarouselIndex].slides.length;
+
+            for (let i = 0; i < totalSlides; i++) {
+                currentSlideIndex = i;
+                renderSlideTabs();
+                loadSlideToForm();
+                updatePreview();
+                
+                await new Promise(r => setTimeout(r, 150));
+
+                const dataUrl = await renderSlideToCanvas(canvas, ctx);
+                const base64Data = dataUrl.replace(/^data:image\/png;base64,/, "");
+                zip.file(`slajd-${i + 1}.png`, base64Data, { base64: true });
+            }
+
+            zip.generateAsync({ type: "blob" }).then(content => {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(content);
+                link.download = `karusel-${currentCarouselIndex + 1}-marijana-digital-soul.zip`;
+                link.click();
+            });
+        }
+
+        async function downloadAllZips() {
+            const zip = new JSZip();
+            const canvas = document.getElementById('exportCanvas');
+            const ctx = canvas.getContext('2d');
+
+            for (let cIdx = 0; cIdx < carousels.length; cIdx++) {
+                currentCarouselIndex = cIdx;
+                const folder = zip.folder(`karusel-${cIdx + 1}`);
+                const slides = carousels[cIdx].slides;
+
+                for (let sIdx = 0; sIdx < slides.length; sIdx++) {
+                    currentSlideIndex = sIdx;
+                    renderCarouselTabs();
+                    renderSlideTabs();
+                    loadSlideToForm();
+                    updatePreview();
+
+                    await new Promise(r => setTimeout(r, 150));
+
+                    const dataUrl = await renderSlideToCanvas(canvas, ctx);
+                    const base64Data = dataUrl.replace(/^data:image\/png;base64,/, "");
+                    folder.file(`slajd-${sIdx + 1}.png`, base64Data, { base64: true });
+                }
+            }
+
+            zip.generateAsync({ type: "blob" }).then(content => {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(content);
+                link.download = `svi-karuseli-marijana-digital-soul.zip`;
+                link.click();
+            });
+        }
+
+        async function renderSlideToCanvas(canvas, ctx) {
+            const slide = carousels[currentCarouselIndex].slides[currentSlideIndex];
+            const totalSlides = carousels[currentCarouselIndex].slides.length;
+            const bg1 = document.getElementById('customBg1').value;
+            const bg2 = document.getElementById('customBg2').value;
+            const textColor = document.getElementById('customText').value;
+            const headingColor = document.getElementById('customHeading').value;
+            const accentColor = document.getElementById('customAccent').value;
+            const goldColor = document.getElementById('customGold').value;
+            const themeObj = themes[currentThemeKey];
+
+            ctx.clearRect(0, 0, 1080, 1350);
+
+            if (themeObj && themeObj.gradient) {
+                const grad = ctx.createLinearGradient(0, 0, 1080, 1350);
+                grad.addColorStop(0, bg1);
+                grad.addColorStop(1, bg2);
+                ctx.fillStyle = grad;
+            } else {
+                ctx.fillStyle = bg1;
+            }
+            ctx.fillRect(0, 0, 1080, 1350);
+
+            ctx.save();
+            ctx.translate(80, 80);
+
+            if (slide.badge) {
+                ctx.fillStyle = accentColor;
+                ctx.beginPath();
+                ctx.roundRect(0, 0, 320, 60, 30);
+                ctx.fill();
+
+                ctx.fillStyle = '#FFFFFF';
+                ctx.font = 'bold 24px "DM Sans", sans-serif';
+                ctx.fillText(slide.badge, 30, 38);
+            }
+
+            ctx.fillStyle = textColor;
+            ctx.font = 'bold 28px "DM Sans", sans-serif';
+            ctx.textAlign = 'right';
+            ctx.fillText(`0${currentSlideIndex + 1} / 0${totalSlides}`, 920, 38);
+            ctx.textAlign = 'left';
+
+            let currentY = 180 + (slide.titleY || 0);
+
+            if (slide.title) {
+                ctx.fillStyle = headingColor;
+                const tSize = slide.titleSize || 60;
+                const tLineHeight = (slide.titleLineHeight !== undefined ? slide.titleLineHeight : 1.2) * tSize;
+                const titleFontName = document.getElementById('fontTitleSelect').value.replace(/'/g, "").split(',')[0].trim();
+                ctx.font = `bold ${tSize}px "${titleFontName}", serif`;
+
+                const words = slide.title.split(' ');
+                let line = '';
+                let lines = [];
+                let maxWidthBox = 920 + (slide.titleWidth || 0);
+
+                for (let n = 0; n < words.length; n++) {
+                    let testLine = line + words[n] + ' ';
+                    let metrics = ctx.measureText(testLine);
+                    if (metrics.width > maxWidthBox && n > 0) {
+                        lines.push(line);
+                        line = words[n] + ' ';
+                    } else {
+                        line = testLine;
+                    }
+                }
+                lines.push(line);
+
+                lines.forEach((l, lIdx) => {
+                    ctx.fillText(l, 0 + (slide.titleX || 0), currentY + (lIdx * tLineHeight));
+                });
+
+                currentY += (lines.length * tLineHeight) + (slide.titleMargin !== undefined ? slide.titleMargin : 24);
+            }
+
+            if (slide.body) {
+                ctx.fillStyle = textColor;
+                const bSize = slide.bodySize || 30;
+                ctx.font = `${bSize}px "DM Sans", sans-serif`;
+                
+                const bWords = slide.body.split(' ');
+                let bLine = '';
+                let bLines = [];
+
+                for (let n = 0; n < bWords.length; n++) {
+                    let testLine = bLine + bWords[n] + ' ';
+                    let metrics = ctx.measureText(testLine);
+                    if (metrics.width > 920 && n > 0) {
+                        bLines.push(bLine);
+                        bLine = bWords[n] + ' ';
+                    } else {
+                        bLine = testLine;
+                    }
+                }
+                bLines.push(bLine);
+
+                bLines.forEach((l, lIdx) => {
+                    ctx.fillText(l, 0 + (slide.bodyX || 0), currentY + (lIdx * (bSize * 1.4)));
+                });
+            }
+
+            ctx.fillStyle = goldColor;
+            ctx.font = 'bold 32px "DM Sans", sans-serif';
+            ctx.fillText(slide.cta || '', 0, 1100);
+
+            ctx.fillStyle = textColor;
+            ctx.font = 'bold 28px "DM Sans", sans-serif';
+            ctx.textAlign = 'right';
+            ctx.fillText('Marijana AI Digital Soul', 920, 1080);
+            ctx.font = '20px "DM Sans", sans-serif';
+            ctx.fillStyle = textColor + '99';
+            ctx.fillText('@marijanaforai', 920, 1115);
+
+            ctx.restore();
+            return canvas.toDataURL('image/png');
+        }
+    </script>
+</body>
+</html>
