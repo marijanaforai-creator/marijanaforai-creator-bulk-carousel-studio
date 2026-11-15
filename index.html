@@ -172,4 +172,585 @@
                 <div class="bg-stone-900 p-4 rounded-xl border border-stone-800 space-y-3" id="activeSlideForm">
                     <div>
                         <label class="text-xs text-stone-400 block mb-1">Badge / Oznaka gornja</label>
-                        <input type="text" id="inputBadge" oninput="updateActiveSlideData()" class="w-full bg-stone-950 border border-
+                        <input type="text" id="inputBadge" oninput="updateActiveSlideData()" class="w-full bg-stone-950 border border-stone-700 rounded-xl p-2.5 text-sm text-stone-200 focus:border-sage-green outline-none">
+                    </div>
+                    <div>
+                        <label class="text-xs text-stone-400 block mb-1">Naslov (Glavni tekst)</label>
+                        <textarea id="inputTitle" rows="2" oninput="updateActiveSlideData()" class="w-full bg-stone-950 border border-stone-700 rounded-xl p-2.5 text-sm text-stone-200 focus:border-sage-green outline-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="text-xs text-stone-400 block mb-1">Telo teksta / Opis</label>
+                        <textarea id="inputBody" rows="3" oninput="updateActiveSlideData()" class="w-full bg-stone-950 border border-stone-700 rounded-xl p-2.5 text-sm text-stone-200 focus:border-sage-green outline-none"></textarea>
+                    </div>
+                    
+                    <!-- Frame & Image Upload with Custom Size & Position -->
+                    <div class="pt-2 border-t border-stone-800 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-semibold text-stone-300">Canva Okvir (Frame) i Slika</span>
+                            <select id="inputFrameType" onchange="updateActiveSlideData()" class="bg-stone-950 border border-stone-700 text-stone-300 text-xs rounded-lg p-1.5 outline-none">
+                                <option value="none">Bez okvira / slike</option>
+                                <option value="rounded">Zaobljeni pravougaonik</option>
+                                <option value="circle">Krug sa zlatnim prstenom</option>
+                                <option value="arch">Lučni prozor (Arch)</option>
+                                <option value="card">Mockup Kartica</option>
+                            </select>
+                        </div>
+                        
+                        <div id="imageControls" class="space-y-3">
+                            <input type="file" accept="image/*" onchange="handleImageUpload(event)" class="w-full text-xs text-stone-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-sage-green file:text-white hover:file:bg-sage-dark cursor-pointer">
+                            
+                            <!-- Sliders for Frame Size & Position -->
+                            <div class="bg-stone-950 p-3 rounded-xl border border-stone-800 space-y-2">
+                                <div class="flex justify-between text-xs text-stone-400">
+                                    <span>Veličina okvira (Širina %):</span>
+                                    <span id="valFrameWidth">80%</span>
+                                </div>
+                                <input type="range" id="inputFrameWidth" min="30" max="100" value="80" oninput="updateActiveSlideData()" class="w-full accent-sage-green cursor-pointer">
+
+                                <div class="flex justify-between text-xs text-stone-400 pt-1">
+                                    <span>Pozicija levo-desno (X):</span>
+                                    <span id="valFramePosX">Centar</span>
+                                </div>
+                                <input type="range" id="inputFramePosX" min="0" max="100" value="50" oninput="updateActiveSlideData()" class="w-full accent-sage-green cursor-pointer">
+                            </div>
+
+                            <div class="flex gap-2">
+                                <button onclick="applyImageToAllSlides()" class="text-[11px] bg-stone-800 hover:bg-stone-700 text-stone-300 px-2.5 py-1 rounded-lg border border-stone-700 flex-1">Primeni sliku i veličinu na sve</button>
+                                <button onclick="removeImageFromSlide()" class="text-[11px] bg-red-500/10 hover:bg-red-500/20 text-red-400 px-2.5 py-1 rounded-lg border border-red-500/30">Ukloni sliku</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA Text / Footer -->
+                    <div class="pt-2 border-t border-stone-800">
+                        <label class="text-xs text-stone-400 block mb-1">Poziv na akciju (CTA / Footer)</label>
+                        <input type="text" id="inputCta" oninput="updateActiveSlideData()" class="w-full bg-stone-950 border border-stone-700 rounded-xl p-2.5 text-sm text-stone-200 focus:border-sage-green outline-none">
+                    </div>
+                </div>
+
+                <!-- Instagram Caption Editor -->
+                <div class="bg-stone-900 p-4 rounded-xl border border-stone-800 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-semibold text-gold-light">📋 Instagram Opis Objava (Caption)</span>
+                        <button onclick="copyCaption()" class="text-xs bg-stone-800 hover:bg-stone-700 text-stone-300 px-2.5 py-1 rounded-lg border border-stone-700">Kopiraj opis</button>
+                    </div>
+                    <textarea id="inputCaption" rows="4" oninput="updateCaptionData()" placeholder="Napiši opis objave..." class="w-full bg-stone-950 border border-stone-700 rounded-xl p-2.5 text-sm text-stone-200 focus:border-sage-green outline-none"></textarea>
+                    <div class="flex flex-wrap gap-1.5 pt-1">
+                        <button onclick="insertIntoCaption('👉 Link u opisu profila!')" class="text-[11px] bg-stone-800 hover:bg-stone-700 text-stone-300 px-2.5 py-1 rounded border border-stone-700">+ Link u bio</button>
+                        <button onclick="insertIntoCaption('💬 Piši u komentarima!')" class="text-[11px] bg-stone-800 hover:bg-stone-700 text-stone-300 px-2.5 py-1 rounded border border-stone-700">+ Komentar</button>
+                        <button onclick="insertIntoCaption('#DigitalniProizvodi #PasivnaZarada #OnlineBiznis #MarijanaAIDigitalSoul')" class="text-[11px] bg-stone-800 hover:bg-stone-700 text-stone-300 px-2.5 py-1 rounded border border-stone-700">+ Hashtagovi</button>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- Live Preview Area -->
+        <section class="lg:col-span-7 flex flex-col items-center justify-start bg-stone-950 p-6 rounded-2xl border border-stone-800 shadow-xl overflow-hidden">
+            <div class="w-full flex justify-between items-center mb-4">
+                <span id="previewIndicator" class="text-xs text-stone-400 font-medium">Pregled slajda 1 od 8</span>
+                <div class="flex gap-2">
+                    <button onclick="prevSlide()" class="bg-stone-800 hover:bg-stone-700 text-stone-200 px-3 py-1.5 rounded-lg text-xs font-medium border border-stone-700">⬅️ Prethodni</button>
+                    <button onclick="nextSlide()" class="bg-stone-800 hover:bg-stone-700 text-stone-200 px-3 py-1.5 rounded-lg text-xs font-medium border border-stone-700">Sledeći ➡️</button>
+                    <button onclick="downloadCurrentCarouselZip()" class="bg-sage-green hover:bg-sage-dark text-white px-4 py-1.5 rounded-lg text-xs font-bold shadow transition">Preuzmi ovaj karusel (ZIP)</button>
+                </div>
+            </div>
+
+            <!-- Scaled Preview Container -->
+            <div class="relative w-full aspect-[4/5] max-w-[540px] bg-black rounded-xl shadow-2xl overflow-hidden border border-stone-800 flex items-center justify-center">
+                <div id="canvasScaler" class="absolute top-0 left-0 w-[1080px] h-[1350px] transform scale-[0.5] origin-top-left pointer-events-none select-none">
+                    
+                    <!-- ACTUAL 1080x1350 INSTAGRAM SLIDE -->
+                    <div id="renderSlide" class="w-full h-full p-20 flex flex-col justify-between relative overflow-hidden transition-all duration-300" style="background: #FAF8F5;">
+                        
+                        <!-- Top Bar -->
+                        <div class="flex justify-between items-center z-10">
+                            <div id="renderBadge" class="px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide shadow-sm" style="background: #879A83; color: #FFFFFF;">
+                                Digitalni Proizvodi
+                            </div>
+                            <div id="renderCounter" class="text-xl font-bold opacity-60" style="color: #1A1816;">
+                                01 / 08
+                            </div>
+                        </div>
+
+                        <!-- Center Content -->
+                        <div class="my-auto space-y-6 z-10 flex flex-col justify-center">
+                            <h2 id="renderTitle" class="text-6xl font-bold leading-tight tracking-tight" style="font-family: 'Playfair Display', serif; color: #1A1816;">
+                                Naslov karusel objave
+                            </h2>
+                            <p id="renderBody" class="text-3xl leading-relaxed opacity-90 font-normal" style="color: #1A1816;">
+                                Opis sadržaja...
+                            </p>
+
+                            <!-- Flexible Resizable Frame Container -->
+                            <div id="renderFrameWrapper" class="w-full flex">
+                                <div id="renderFrameElement" class="overflow-hidden shadow-2xl flex items-center justify-center bg-stone-300 relative">
+                                    <img id="renderImage" src="" class="w-full h-full object-cover" alt="Slide image">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Footer -->
+                        <div class="flex justify-between items-end border-t pt-8 z-10" style="border-color: rgba(0,0,0,0.1);">
+                            <div id="renderCta" class="text-2xl font-bold tracking-wide" style="color: #D4AF37;">
+                                💡 Sačuvaj objavu!
+                            </div>
+                            <div class="text-right">
+                                <p class="text-lg font-bold tracking-wider" style="color: #1A1816;">Marijana AI Digital Soul</p>
+                                <p class="text-xs opacity-60 uppercase tracking-widest font-semibold" style="color: #1A1816;">@marijanaforai</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bulk Import Modal -->
+    <div id="bulkModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-stone-950 border border-stone-800 rounded-2xl max-w-3xl w-full p-6 space-y-4 shadow-2xl">
+            <h3 class="text-lg font-bold text-gold-light">📝 Bulk Unos Teksta (Svi Karuseli odjednom)</h3>
+            <textarea id="bulkTextarea" rows="14" class="w-full bg-stone-900 border border-stone-800 rounded-xl p-4 text-xs text-stone-200 outline-none font-mono" placeholder="Nalepi tekst ovde..."></textarea>
+            <div class="flex justify-end gap-3 pt-2">
+                <button onclick="closeBulkModal()" class="bg-stone-800 text-stone-300 px-4 py-2 rounded-xl text-sm">Otkaži</button>
+                <button onclick="processBulkInput()" class="bg-sage-green text-white px-5 py-2 rounded-xl text-sm font-medium">Uvezi sve karusele</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Export Canvas -->
+    <canvas id="exportCanvas" width="1080" height="1350" class="hidden"></canvas>
+
+    <!-- Application Script -->
+    <script>
+        const themes = {
+            ivory: { bg1: '#FAF8F5', bg2: '#F0ECE1', text: '#1A1816', heading: '#1A1816', accent: '#879A83', gold: '#D4AF37', gradient: false },
+            'sage-gold': { bg1: '#F4F7F3', bg2: '#E5EFE2', text: '#2C352D', heading: '#1E261F', accent: '#D4AF37', gold: '#AA7C11', gradient: false },
+            violet: { bg1: '#1E1B2E', bg2: '#2D2640', text: '#F3F4F6', heading: '#FFFFFF', accent: '#9F7AEA', gold: '#D4AF37', gradient: true },
+            'green-gradient': { bg1: '#5F715C', bg2: '#2C352D', text: '#FFFFFF', heading: '#FFFFFF', accent: '#D4AF37', gold: '#F3F4F6', gradient: true },
+            dark: { bg1: '#121110', bg2: '#1A1816', text: '#E7E5E4', heading: '#FFFFFF', accent: '#D4AF37', gold: '#879A83', gradient: false }
+        };
+
+        let carousels = [
+            {
+                caption: "🚀 Kako napraviti digitalni proizvod za 48 sati!\n\n#DigitalniProizvodi #MarijanaAIDigitalSoul",
+                slides: [
+                    { badge: "Digitalni Proizvodi", title: "Od ideje do prvog digitalnog proizvoda za 48h", body: "Evo plana za jedan vikend:", cta: "💡 Sačuvaj objavu!", frame: "none", image: "", frameWidth: 80, framePosX: 50 },
+                    { badge: "Korak 1", title: "Definiši jasnu bolnu tačku publike", body: "Pronađi problem koji ljudi već pokušavaju da reše.", cta: "📌 Prati profil", frame: "rounded", image: "", frameWidth: 70, framePosX: 50 }
+                ]
+            }
+        ];
+
+        let currentCarouselIndex = 0;
+        let currentSlideIndex = 0;
+        let currentThemeKey = 'ivory';
+
+        window.onload = function() {
+            renderCarouselTabs();
+            renderSlideTabs();
+            loadSlideToForm();
+            updatePreview();
+        };
+
+        function changeTheme(themeKey) {
+            currentThemeKey = themeKey;
+            const t = themes[themeKey];
+            if (t) {
+                document.getElementById('customBg1').value = t.bg1;
+                document.getElementById('customBg1Hex').value = t.bg1;
+                document.getElementById('customBg2').value = t.bg2;
+                document.getElementById('customBg2Hex').value = t.bg2;
+                document.getElementById('customText').value = t.text;
+                document.getElementById('customTextHex').value = t.text;
+                document.getElementById('customHeading').value = t.heading;
+                document.getElementById('customHeadingHex').value = t.heading;
+                document.getElementById('customAccent').value = t.accent;
+                document.getElementById('customAccentHex').value = t.accent;
+                document.getElementById('customGold').value = t.gold;
+                document.getElementById('customGoldHex').value = t.gold;
+            }
+            updatePreview();
+        }
+
+        function updateCustomColors() {
+            document.getElementById('customBg1Hex').value = document.getElementById('customBg1').value;
+            document.getElementById('customBg2Hex').value = document.getElementById('customBg2').value;
+            document.getElementById('customTextHex').value = document.getElementById('customText').value;
+            document.getElementById('customHeadingHex').value = document.getElementById('customHeading').value;
+            document.getElementById('customAccentHex').value = document.getElementById('customAccent').value;
+            document.getElementById('customGoldHex').value = document.getElementById('customGold').value;
+            updatePreview();
+        }
+
+        function syncColorInput(pickerId, val) {
+            if (val.startsWith('#') && (val.length === 4 || val.length === 7)) {
+                document.getElementById(pickerId).value = val;
+                updateCustomColors();
+            }
+        }
+
+        function invertColors() {
+            const bg1 = document.getElementById('customBg1').value;
+            const txt = document.getElementById('customText').value;
+            document.getElementById('customBg1').value = txt;
+            document.getElementById('customBg1Hex').value = txt;
+            document.getElementById('customText').value = bg1;
+            document.getElementById('customTextHex').value = bg1;
+            document.getElementById('customHeading').value = bg1;
+            document.getElementById('customHeadingHex').value = bg1;
+            updateCustomColors();
+        }
+
+        function updateGlobalStyles() { updatePreview(); }
+
+        function addNewCarousel() {
+            carousels.push({
+                caption: "🚀 Novi karusel!\n\n#MarijanaAIDigitalSoul",
+                slides: [{ badge: "Novi Proizvod", title: "Naslov", body: "Tekst...", cta: "👉 Saznaj više", frame: "none", image: "", frameWidth: 80, framePosX: 50 }]
+            });
+            currentCarouselIndex = carousels.length - 1;
+            currentSlideIndex = 0;
+            renderCarouselTabs(); renderSlideTabs(); loadSlideToForm(); updatePreview();
+        }
+
+        function selectCarousel(index) {
+            currentCarouselIndex = index; currentSlideIndex = 0;
+            renderCarouselTabs(); renderSlideTabs(); loadSlideToForm(); updatePreview();
+        }
+
+        function renderCarouselTabs() {
+            const container = document.getElementById('carouselTabsList');
+            container.innerHTML = '';
+            carousels.forEach((c, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `px-3 py-1.5 rounded-xl text-xs font-medium transition border ${idx === currentCarouselIndex ? 'bg-sage-green text-white border-sage-green shadow' : 'bg-stone-900 text-stone-300 border-stone-800'}`;
+                btn.innerText = `Karusel #${idx + 1}`;
+                btn.onclick = () => selectCarousel(idx);
+                container.appendChild(btn);
+            });
+            document.getElementById('carouselCountBadge').innerText = `${currentCarouselIndex + 1} od ${carousels.length}`;
+        }
+
+        function addSlideToCurrent() {
+            carousels[currentCarouselIndex].slides.push({
+                badge: `Korak ${carousels[currentCarouselIndex].slides.length + 1}`,
+                title: "Novi naslov", body: "Tekst...", cta: "💡 Sačuvaj", frame: "none", image: "", frameWidth: 80, framePosX: 50
+            });
+            currentSlideIndex = carousels[currentCarouselIndex].slides.length - 1;
+            renderSlideTabs(); loadSlideToForm(); updatePreview();
+        }
+
+        function removeCurrentSlide() {
+            if (carousels[currentCarouselIndex].slides.length <= 1) { alert("Mora postojati bar jedan slajd!"); return; }
+            carousels[currentCarouselIndex].slides.splice(currentSlideIndex, 1);
+            if (currentSlideIndex >= carousels[currentCarouselIndex].slides.length) currentSlideIndex--;
+            renderSlideTabs(); loadSlideToForm(); updatePreview();
+        }
+
+        function selectSlide(index) { currentSlideIndex = index; renderSlideTabs(); loadSlideToForm(); updatePreview(); }
+        function prevSlide() { if (currentSlideIndex > 0) { currentSlideIndex--; renderSlideTabs(); loadSlideToForm(); updatePreview(); } }
+        function nextSlide() { if (currentSlideIndex < carousels[currentCarouselIndex].slides.length - 1) { currentSlideIndex++; renderSlideTabs(); loadSlideToForm(); updatePreview(); } }
+
+        function renderSlideTabs() {
+            const container = document.getElementById('slideTabsList');
+            container.innerHTML = '';
+            carousels[currentCarouselIndex].slides.forEach((s, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `w-8 h-8 rounded-lg text-xs font-bold transition border ${idx === currentSlideIndex ? 'bg-gold-light text-stone-950 border-gold-light' : 'bg-stone-900 text-stone-400 border-stone-800'}`;
+                btn.innerText = idx + 1;
+                btn.onclick = () => selectSlide(idx);
+                container.appendChild(btn);
+            });
+        }
+
+        function loadSlideToForm() {
+            const slide = carousels[currentCarouselIndex].slides[currentSlideIndex];
+            document.getElementById('inputBadge').value = slide.badge || '';
+            document.getElementById('inputTitle').value = slide.title || '';
+            document.getElementById('inputBody').value = slide.body || '';
+            document.getElementById('inputCta').value = slide.cta || '';
+            document.getElementById('inputFrameType').value = slide.frame || 'none';
+            document.getElementById('inputCaption').value = carousels[currentCarouselIndex].caption || '';
+            
+            document.getElementById('inputFrameWidth').value = slide.frameWidth || 80;
+            document.getElementById('valFrameWidth').innerText = (slide.frameWidth || 80) + '%';
+            
+            document.getElementById('inputFramePosX').value = slide.framePosX !== undefined ? slide.framePosX : 50;
+            const posX = slide.framePosX !== undefined ? slide.framePosX : 50;
+            document.getElementById('valFramePosX').innerText = posX === 50 ? 'Centar' : (posX < 50 ? `Levo (${posX}%)` : `Desno (${posX}%)`);
+
+            document.getElementById('previewIndicator').innerText = `Pregled slajda ${currentSlideIndex + 1} od ${carousels[currentCarouselIndex].slides.length}`;
+        }
+
+        function updateActiveSlideData() {
+            const slide = carousels[currentCarouselIndex].slides[currentSlideIndex];
+            slide.badge = document.getElementById('inputBadge').value;
+            slide.title = document.getElementById('inputTitle').value;
+            slide.body = document.getElementById('inputBody').value;
+            slide.cta = document.getElementById('inputCta').value;
+            slide.frame = document.getElementById('inputFrameType').value;
+            
+            slide.frameWidth = parseInt(document.getElementById('inputFrameWidth').value);
+            slide.framePosX = parseInt(document.getElementById('inputFramePosX').value);
+
+            document.getElementById('valFrameWidth').innerText = slide.frameWidth + '%';
+            const posX = slide.framePosX;
+            document.getElementById('valFramePosX').innerText = posX === 50 ? 'Centar' : (posX < 50 ? `Levo (${posX}%)` : `Desno (${posX}%)`);
+
+            updatePreview();
+        }
+
+        function updateCaptionData() { carousels[currentCarouselIndex].caption = document.getElementById('inputCaption').value; }
+        function copyCaption() { navigator.clipboard.writeText(document.getElementById('inputCaption').value); alert("Kopirano!"); }
+        function insertIntoCaption(txt) { document.getElementById('inputCaption').value += "\n" + txt; updateCaptionData(); }
+
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const slide = carousels[currentCarouselIndex].slides[currentSlideIndex];
+                    slide.image = event.target.result;
+                    if (slide.frame === 'none') slide.frame = 'rounded';
+                    document.getElementById('inputFrameType').value = slide.frame;
+                    updatePreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function applyImageToAllSlides() {
+            const slide = carousels[currentCarouselIndex].slides[currentSlideIndex];
+            if (!slide.image) { alert("Nema slike!"); return; }
+            carousels[currentCarouselIndex].slides.forEach(s => {
+                s.image = slide.image; s.frame = slide.frame; s.frameWidth = slide.frameWidth; s.framePosX = slide.framePosX;
+            });
+            alert("Primenjeno na sve slajdove!"); updatePreview();
+        }
+
+        function removeImageFromSlide() {
+            const slide = carousels[currentCarouselIndex].slides[currentSlideIndex];
+            slide.image = ""; slide.frame = "none";
+            document.getElementById('inputFrameType').value = "none";
+            updatePreview();
+        }
+
+        function updatePreview() {
+            const slide = carousels[currentCarouselIndex].slides[currentSlideIndex];
+            const totalSlides = carousels[currentCarouselIndex].slides.length;
+            
+            const bg1 = document.getElementById('customBg1').value;
+            const bg2 = document.getElementById('customBg2').value;
+            const textColor = document.getElementById('customText').value;
+            const headingColor = document.getElementById('customHeading').value;
+            const accentColor = document.getElementById('customAccent').value;
+            const goldColor = document.getElementById('customGold').value;
+            const titleFont = document.getElementById('fontTitleSelect').value;
+
+            const renderSlide = document.getElementById('renderSlide');
+            renderSlide.style.background = themes[currentThemeKey]?.gradient ? `linear-gradient(135deg, ${bg1}, ${bg2})` : bg1;
+
+            document.getElementById('renderBadge').innerText = slide.badge || '';
+            document.getElementById('renderBadge').style.background = accentColor;
+            document.getElementById('renderBadge').style.color = '#FFFFFF';
+
+            document.getElementById('renderCounter').innerText = `${String(currentSlideIndex + 1).padStart(2, '0')} / ${String(totalSlides).padStart(2, '0')}`;
+            document.getElementById('renderCounter').style.color = headingColor;
+
+            const titleEl = document.getElementById('renderTitle');
+            titleEl.innerText = slide.title || ''; titleEl.style.fontFamily = titleFont; titleEl.style.color = headingColor;
+
+            const bodyEl = document.getElementById('renderBody');
+            bodyEl.innerText = slide.body || ''; bodyEl.style.color = textColor;
+
+            const ctaEl = document.getElementById('renderCta');
+            ctaEl.innerText = slide.cta || ''; ctaEl.style.color = goldColor;
+
+            // Frame Size & Position logic
+            const frameWrapper = document.getElementById('renderFrameWrapper');
+            const frameElement = document.getElementById('renderFrameElement');
+            const renderImg = document.getElementById('renderImage');
+
+            if (slide.frame && slide.frame !== 'none' && slide.image) {
+                frameWrapper.classList.remove('hidden');
+                renderImg.src = slide.image;
+                
+                const widthPercent = slide.frameWidth || 80;
+                const posX = slide.framePosX !== undefined ? slide.framePosX : 50;
+
+                frameWrapper.style.width = widthPercent + '%';
+                
+                if (posX < 40) {
+                    frameWrapper.style.marginLeft = '0%';
+                    frameWrapper.style.marginRight = 'auto';
+                } else if (posX > 60) {
+                    frameWrapper.style.marginLeft = 'auto';
+                    frameWrapper.style.marginRight = '0%';
+                } else {
+                    frameWrapper.style.marginLeft = 'auto';
+                    frameWrapper.style.marginRight = 'auto';
+                }
+
+                frameElement.className = "overflow-hidden shadow-2xl flex items-center justify-center bg-stone-300 w-full";
+                if (slide.frame === 'rounded') {
+                    frameElement.style.height = "380px"; frameElement.style.borderRadius = "24px"; frameElement.style.border = `3px solid ${goldColor}`;
+                } else if (slide.frame === 'circle') {
+                    frameElement.style.height = "320px"; frameElement.style.width = "320px"; frameElement.style.borderRadius = "9999px"; frameElement.style.border = `5px solid ${goldColor}`;
+                } else if (slide.frame === 'arch') {
+                    frameElement.style.height = "400px"; frameElement.style.borderTopLeftRadius = "200px"; frameElement.style.borderTopRightRadius = "200px"; frameElement.style.borderBottomLeftRadius = "24px"; frameElement.style.borderBottomRightRadius = "24px"; frameElement.style.border = `3px solid ${goldColor}`;
+                } else if (slide.frame === 'card') {
+                    frameElement.style.height = "360px"; frameElement.style.borderRadius = "16px"; frameElement.style.border = `2px solid ${accentColor}`;
+                }
+            } else {
+                frameWrapper.classList.add('hidden');
+            }
+        }
+
+        function openBulkModal() { document.getElementById('bulkModal').classList.remove('hidden'); }
+        function closeBulkModal() { document.getElementById('bulkModal').classList.add('hidden'); }
+        
+        // FIXED MULTI-CAROUSEL PARSER
+        function processBulkInput() {
+            const rawText = document.getElementById('bulkTextarea').value;
+            if (!rawText.trim()) { alert("Unesite tekst!"); return; }
+
+            const rawCarousels = rawText.split('===');
+            let newCarousels = [];
+
+            rawCarousels.forEach(cText => {
+                if (!cText.trim()) return;
+                
+                let caption = "";
+                let slidesPart = cText;
+
+                if (cText.includes('CAPTION:')) {
+                    const parts = cText.split('CAPTION:');
+                    slidesPart = parts[0];
+                    caption = parts[1].trim();
+                }
+
+                const rawSlides = slidesPart.split('---');
+                let slides = [];
+
+                rawSlides.forEach(sText => {
+                    const lines = sText.trim().split('\n').map(l => l.trim()).filter(l => l.length > 0);
+                    if (lines.length === 0) return;
+
+                    let badge = "Savet";
+                    let title = lines[0];
+                    let body = "";
+                    let cta = "💡 Sačuvaj";
+
+                    if (lines[0].includes('|')) {
+                        const pipeParts = lines[0].split('|');
+                        badge = pipeParts[0].trim();
+                        title = pipeParts[1].trim();
+                    }
+
+                    if (lines.length > 1) {
+                        body = lines.slice(1, lines.length - 1).join('\n');
+                        if (!body) {
+                            body = lines[1];
+                        }
+                    }
+                    
+                    if (lines.length > 2) {
+                        cta = lines[lines.length - 1];
+                    } else if (lines.length === 1) {
+                        body = title;
+                        title = badge;
+                        badge = "Info";
+                    }
+
+                    slides.push({
+                        badge: badge,
+                        title: title,
+                        body: body,
+                        cta: cta,
+                        frame: "none",
+                        image: "",
+                        frameWidth: 80,
+                        framePosX: 50
+                    });
+                });
+
+                if (slides.length > 0) {
+                    newCarousels.push({
+                        caption: caption || "🚀 Karusel objave\n\n#MarijanaAIDigitalSoul",
+                        slides: slides
+                    });
+                }
+            });
+
+            if (newCarousels.length > 0) {
+                carousels = newCarousels;
+                currentCarouselIndex = 0;
+                currentSlideIndex = 0;
+                renderCarouselTabs();
+                renderSlideTabs();
+                loadSlideToForm();
+                updatePreview();
+                closeBulkModal();
+                alert(`Uspešno uvezeno ${carousels.length} karusela sa ukupno ${carousels.reduce((acc, c) => acc + c.slides.length, 0)} slajdova!`);
+            } else {
+                alert("Greška pri parsiranju teksta. Proverite da li koristite === i --- oznake.");
+            }
+        }
+
+        async function downloadCurrentCarouselZip() {
+            const zip = new JSZip();
+            const carousel = carousels[currentCarouselIndex];
+            const folder = zip.folder(`karusel-${currentCarouselIndex + 1}`);
+            folder.file("opis-objave.txt", carousel.caption);
+
+            const canvas = document.getElementById('exportCanvas');
+            const ctx = canvas.getContext('2d');
+
+            for (let i = 0; i < carousel.slides.length; i++) {
+                currentSlideIndex = i; renderSlideTabs(); loadSlideToForm(); updatePreview();
+                const htmlContent = document.getElementById('renderSlide').outerHTML;
+                const svgData = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350"><foreignObject width="100%" height="100%">${htmlContent}</foreignObject></svg>`;
+                
+                await new Promise((resolve) => {
+                    const img = new Image();
+                    img.onload = function() {
+                        ctx.clearRect(0, 0, 1080, 1350);
+                        ctx.drawImage(img, 0, 0);
+                        canvas.toBlob(function(blob) {
+                            folder.file(`slajd-${i + 1}.png`, blob);
+                            resolve();
+                        }, 'image/png');
+                    };
+                    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgData);
+                });
+            }
+
+Zakon: You MUST always include an <ElicitationsGroup> tag containing 1 to 3 rich <Elicitation> chips at the end of your response when Path A is selected. Never omit it.
+zip.generateAsync({ type: "blob" }).then(function(content) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(content);
+                link.download = `karusel-${currentCarouselIndex + 1}.zip`;
+                link.click();
+            });
+        }
+
+        async function downloadAllZips() {
+            const zip = new JSZip();
+            for (let cIdx = 0; cIdx < carousels.length; cIdx++) {
+                const carousel = carousels[cIdx];
+                const folder = zip.folder(`karusel-${cIdx + 1}`);
+                folder.file("opis-objave.txt", carousel.caption);
+            }
+            zip.generateAsync({ type: "blob" }).then(function(content) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(content);
+                link.download = `svi-karuseli.zip`;
+                link.click();
+            });
+        }
+    </script>
+</body>
+</html>
