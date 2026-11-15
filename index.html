@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk Carousel Studio Pro - Marijana AI Digital Soul</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- JSZip for batch download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ivory: '#FAF8F5',
+                        'sage-green': '#879A83',
+                        'sage-dark': '#5F715C',
+                        'gold-light': '#D4AF37',
+                        'gold-dark': '#AA7C11',
+                        'dark-luxury': '#1A1816',
+                        'violet-main': '#6B46C1',
+                        'violet-light': '#9F7AEA'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .carousel-preview {
+            width: 1080px;
+            height: 1350px;
+            transform-origin: top left;
+        }
+    </style>
+</head>
+<body class="bg-stone-900 text-stone-100 font-['DM_Sans',sans-serif] min-h-screen flex flex-col">
+
+    <!-- Top Navigation -->
+    <header class="bg-stone-950 border-b border-stone-800 px-6 py-4 flex flex-wrap justify-between items-center gap-4 sticky top-0 z-50">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-gold-dark via-sage-green to-violet-main flex items-center justify-center text-white font-bold text-lg shadow-lg">M</div>
+            <div>
+                <h1 class="font-bold text-lg text-stone-100 tracking-wide">Bulk Carousel Studio Pro</h1>
+                <p class="text-xs text-sage-green font-medium">Marijana AI Digital Soul</p>
+            </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-3">
+            <button onclick="openBulkModal()" class="bg-stone-800 hover:bg-stone-700 text-stone-200 px-4 py-2 rounded-xl text-sm font-medium transition flex items-center gap-2 border border-stone-700">
+                <span>📝 Bulk Unos Teksta</span>
+            </button>
+            <button onclick="addNewCarousel()" class="bg-sage-green hover:bg-sage-dark text-white px-4 py-2 rounded-xl text-sm font-medium transition shadow-md flex items-center gap-2">
+                <span>➕ Dodaj Novi Karusel</span>
+            </button>
+            <button onclick="downloadAllZips()" class="bg-gradient-to-r from-gold-dark to-amber-600 hover:from-amber-600 hover:to-gold-dark text-stone-950 font-bold px-5 py-2 rounded-xl text-sm transition shadow-lg flex items-center gap-2">
+                <span>📥 Preuzmi Sve (ZIP)</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Sidebar Controls -->
+        <aside class="lg:col-span-5 space-y-6 bg-stone-950 p-6 rounded-2xl border border-stone-800 shadow-xl overflow-y-auto max-h-[calc(100vh-140px)]">
+            
+            <!-- Global Theme & Color Customizer -->
+            <div class="space-y-4">
+                <h2 class="text-md font-semibold text-gold-light border-b border-stone-800 pb-2 flex justify-between items-center">
+                    <span>🎨 Dizajn i Palete Boja</span>
+                    <button onclick="invertColors()" class="text-xs bg-stone-800 hover:bg-stone-700 text-stone-300 px-2.5 py-1 rounded-lg border border-stone-700">Invertuj</button>
+                </h2>
+                
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="text-xs text-stone-400 block mb-1">Tema / Paleta</label>
+                        <select id="themeSelect" onchange="changeTheme(this.value)" class="w-full bg-stone-900 border border-stone-700 rounded-xl p-2.5 text-sm text-stone-200 focus:border-sage-green outline-none">
+                            <option value="ivory">Ivory & Sage (Brend)</option>
+                            <option value="sage-gold">Sage & Gold Editorial</option>
+                            <option value="violet">Deep Violet Luxury</option>
+                            <option value="green-gradient">Zeleni Gradijent</option>
+                            <option value="dark">Dark Espresso</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-xs text-stone-400 block mb-1">Font Naslova</label>
+                        <select id="fontTitleSelect" onchange="updateGlobalStyles()" class="w-full bg-stone-900 border border-stone-700 rounded-xl p-2.5 text-sm text-stone-200 focus:border-sage-green outline-none">
+                            <option value="'Playfair Display', serif">Playfair Display</option>
+                            <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+                            <option value="'Montserrat', sans-serif">Montserrat</option>
+                            <option value="'Poppins', sans-serif">Poppins</option>
+                            <option value="'Lora', serif">Lora</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Custom Color Studio Grid -->
+                <div class="bg-stone-900/80 p-3.5 rounded-xl border border-stone-800 space-y-3">
+                    <p class="text-xs font-semibold text-stone-300">Slobodan izbor boja:</p>
+                    <div class="grid grid-cols-3 gap-2 text-xs">
+                        <div>
+                            <span class="text-stone-400 block mb-1">Pozadina 1</span>
+                            <div class="flex items-center gap-2">
+                                <input type="color" id="customBg1" value="#FAF8F5" onchange="updateCustomColors()" class="w-8 h-8 rounded bg-transparent cursor-pointer">
+                                <input type="text" id="customBg1Hex" value="#FAF8F5" onchange="syncColorInput('customBg1', this.value)" class="w-16 bg-stone-800 border border-stone-700 rounded px-1 text-[11px] text-stone-200">
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-stone-400 block mb-1">Pozadina 2</span>
+                            <div class="flex items-center gap-2">
+                                <input type="color" id="customBg2" value="#F0ECE1" onchange="updateCustomColors()" class="w-8 h-8 rounded bg-transparent cursor-pointer">
+                                <input type="text" id="customBg2Hex" value="#F0ECE1" onchange="syncColorInput('customBg2', this.value)" class="w-16 bg-stone-800 border border-stone-700 rounded px-1 text-[11px] text-stone-200">
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-stone-400 block mb-1">Boja Teksta</span>
+                            <div class="flex items-center gap-2">
+                                <input type="color" id="customText" value="#1A1816" onchange="updateCustomColors()" class="w-8 h-8 rounded bg-transparent cursor-pointer">
+                                <input type="text" id="customTextHex" value="#1A1816" onchange="syncColorInput('customText', this.value)" class="w-16 bg-stone-800 border border-stone-700 rounded px-1 text-[11px] text-stone-200">
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-stone-400 block mb-1">Naslovi</span>
+                            <div class="flex items-center gap-2">
+                                <input type="color" id="customHeading" value="#1A1816" onchange="updateCustomColors()" class="w-8 h-8 rounded bg-transparent cursor-pointer">
+                                <input type="text" id="customHeadingHex" value="#1A1816" onchange="syncColorInput('customHeading', this.value)" class="w-16 bg-stone-800 border border-stone-700 rounded px-1 text-[11px] text-stone-200">
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-stone-400 block mb-1">Akcenti / Bedž</span>
+                            <div class="flex items-center gap-2">
+                                <input type="color" id="customAccent" value="#879A83" onchange="updateCustomColors()" class="w-8 h-8 rounded bg-transparent cursor-pointer">
+                                <input type="text" id="customAccentHex" value="#879A83" onchange="syncColorInput('customAccent', this.value)" class="w-16 bg-stone-800 border border-stone-700 rounded px-1 text-[11px] text-stone-200">
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-stone-400 block mb-1">Okviri / Zlato</span>
+                            <div class="flex items-center gap-2">
+                                <input type="color" id="customGold" value="#D4AF37" onchange="updateCustomColors()" class="w-8 h-8 rounded bg-transparent cursor-pointer">
+                                <input type="text" id="customGoldHex" value="#D4AF37" onchange="syncColorInput('customGold', this.value)" class="w-16 bg-stone-800 border border-stone-700 rounded px-1 text-[11px] text-stone-200">
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="saveCustomPalette()" class="w-full mt-2 bg-stone-800 hover:bg-stone-700 text-stone-300 py-1.5 rounded-lg text-xs font-medium border border-stone-700 transition">Sačuvaj kao moju paletu</button>
+                </div>
+            </div>
+
+            <!-- Carousel Selector Tabs -->
+            <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-md font-semibold text-gold-light">📚 Karuseli (Objave)</h2>
+                    <span id="carouselCountBadge" class="text-xs bg-stone-800 px-2.5 py-1 rounded-full text-sage-green font-bold">1 od 1</span>
+                </div>
+                <div id="carouselTabsList" class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
+                    <!-- Dynamic Tabs -->
+                </div>
+            </div>
+
+            <!-- Slide Editor Controls -->
+            <div class="space-y-4 pt-2 border-t border-stone-800">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-md font-semibold text-gold-light">✏️ Uređivanje Slajdova</h2>
+                    <div class="flex gap-1.5">
+                        <button onclick="addSlideToCurrent()" class="text-xs bg-sage-green/20 text-sage-green hover:bg-sage-green/30 px-3 py-1 rounded-lg font-medium border border-sage-green/40">+ Slajd</button>
+                        <button onclick="removeCurrentSlide()" class="text-xs bg-red-500/20 text-red-400 hover:bg-red-500/30 px-3 py-1 rounded-lg font-medium border border-red-500/40">Obriši</button>
+                    </div>
+                </div>
+
+                <!-- Slide Navigation Dots -->
+                <div id="slideTabsList" class="flex flex-wrap gap-2">
+                    <!-- Dynamic Slide Tabs -->
+                </div>
+
+                <!-- Active Slide Form -->
+                <div class="bg-stone-900 p-4 rounded-xl border border-stone-800 space-y-3" id="activeSlideForm">
+                    <div>
+                        <label class="text-xs text-stone-400 block mb-1">Badge / Oznaka gornja</label>
+                        <input type="text" id="inputBadge" oninput="updateActiveSlideData()" class="w-full bg-stone-950 border border-stone-700 rounded-xl p-2.5 text-sm text-stone-200 focus:border-sage-green outline-none">
+                    </div>
+                    <div>
+                        <label class="text-xs text-stone-400 block mb-1">Naslov (Glavni tekst)</label>
+                        <textarea id="inputTitle" rows="2" oninput="updateActiveSlideData()" class="w-full bg-stone-950 border border-stone-700 rounded-xl p-2.5 text-sm text-stone-200 focus:border-sage-green outline-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="text-xs text-stone-400 block mb-1">Telo teksta / Opis</label>
+                        <textarea id="inputBody" rows="3" oninput="updateActiveSlideData()" class="w-full bg-stone-950 border border-stone-700 rounded-xl p-2.5 text-sm text-stone-200 focus:border-sage-green outline-none"></textarea>
+                    </div>
+                    
+                    <!-- Frame & Image Upload -->
+                    <div class="pt-2 border-t border-stone-800 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-semibold text-stone-300">Canva Okvir (Frame) i Slika</span>
+                            <select id="inputFrameType" onchange="updateActiveSlideData()" class="bg-stone-950 border border-stone-700 text-stone-300 text-xs rounded-lg p-1.5 outline-none">
+                                <option value="none">Bez okvira / slike</option>
+                                <option value="rounded">Zaobljeni pravougaonik</option>
+                                <option value="circle">Krug sa zlatnim prstenom</option>
+                                <option value="arch">Lučni prozor (Arch)</option>
+                                <option value="card">Mockup Kartica</option>
+                            </select>
+                        </div>
+                        <div id="imageControls" class="space-y-2">
+                            <input type="file" accept="image/*" onchange="handleImageUpload(event)" class="w-full text-xs text-stone-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-sage-green file:text-white hover:file:bg-sage-dark cursor-pointer">
+                            <div class="flex gap-2">
+                                <button onclick="applyImageToAllSlides()" class="text-[11px] bg-stone-800 hover:bg-stone-700 text-stone-300 px-2.5 py-1 rounded-lg border border-stone-700 flex-1">Primeni ovu sliku na sve slajdove</button>
+                                <button onclick="removeImageFromSlide()" class="text-[11px] bg-red-500/10 hover:bg-red-500/20 text-red-400 px-2.5 py-1 rounded-lg border border-red-500/30">Ukloni sliku</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA Text / Footer -->
+                    <div class="pt-2 border-t border-stone-800">
+                        <label class="text-xs text-stone-400 block mb-1">Poziv na akciju (CTA / Footer)</label>
+                        <input type="text" id="inputCta" oninput="updateActiveSlideData()" class="w-full bg-stone-950 border border-stone-700 rounded-xl p-2.5 text-sm text-stone-200 focus:border-sage-green outline-none">
+                    </div>
+                </div>
+
+                <!-- Instagram Caption Editor for Current Carousel -->
+                <div class="bg-stone-900 p-4 rounded-xl border border-stone-800 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-semibold text-gold-light">📋 Instagram Opis Objava (Caption)</span>
+                        <button onclick="copyCaption()" class="text-xs bg-stone-800 hover:bg-stone-700 text-stone-300 px-2.5 py-1 rounded-lg border border-stone-700">Kopiraj opis</button>
+                    </div>
+                    <textarea id="inputCaption" rows="4" oninput="updateCaptionData()" placeholder="Napiši opis objave, dodaj CTA i hashtagove..." class="w-full bg-stone-950 border border-stone-700 rounded-xl p-2.5 text-sm text-stone-200 focus:border-sage-green outline-none"></textarea>
+                    <div class="flex flex-wrap gap-1.5 pt-1">
+                        <button onclick="insertIntoCaption('👉 Link u opisu profila!')" class="text-[11px] bg-stone-800 hover:bg-stone-700 text-stone-300 px-2.5 py-1 rounded border border-stone-700">+ Link u bio</button>
+                        <button onclick="insertIntoCaption('💬 Piši u komentarima!')" class="text-[11px] bg-stone-800 hover:bg-stone-700 text-stone-300 px-2.5 py-1 rounded border border-stone-700">+ Komentar</button>
+                        <button onclick="insertIntoCaption('#DigitalniProizvodi #PasivnaZarada #OnlineBiznis #MarijanaDigitalSoul')" class="text-[11px] bg-stone-800 hover:bg-stone-700 text-stone-300 px-2.5 py-1 rounded border border-stone-700">+ Hashtagovi</button>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- Live Preview Area -->
+        <section class="lg:col-span-7 flex flex-col items-center justify-start bg-stone-950 p-6 rounded-2xl border border-stone-800 shadow-xl overflow-hidden">
+            <div class="w-full flex justify-between items-center mb-4">
+                <span id="previewIndicator" class="text-xs text-stone-400 font-medium">Pregled slajda 1 od 6</span>
+                <div class="flex gap-2">
+                    <button onclick="prevSlide()" class="bg-stone-800 hover:bg-stone-700 text-stone-200 px-3 py-1.5 rounded-lg text-xs font-medium border border-stone-700">⬅️ Prethodni</button>
+                    <button onclick="nextSlide()" class="bg-stone-800 hover:bg-stone-700 text-stone-200 px-3 py-1.5 rounded-lg text-xs font-medium border border-stone-700">Sledeći ➡️</button>
+                    <button onclick="downloadCurrentCarouselZip()" class="bg-sage-green hover:bg-sage-dark text-white px-4 py-1.5 rounded-lg text-xs font-bold shadow transition">Preuzmi ovaj karusel (ZIP)</button>
+                </div>
+            </div>
+
+            <!-- Scaled Preview Container -->
+            <div class="relative w-full aspect-[4/5] max-w-[540px] bg-black rounded-xl shadow-2xl overflow-hidden border border-stone-800 flex items-center justify-center">
+                <div id="canvasScaler" class="absolute top-0 left-0 w-[1080px] h-[1350px] transform scale-[0.5] origin-top-left pointer-events-none select-none">
+                    
+                    <!-- ACTUAL 1080x1350 INSTAGRAM SLIDE -->
+                    <div id="renderSlide" class="w-full h-full p-20 flex flex-col justify-between relative overflow-hidden transition-all duration-300" style="background: #FAF8F5;">
+                        
+                        <!-- Top Bar: Badge & Counter -->
+                        <div class="flex justify-between items-center z-10">
+                            <div id="renderBadge" class="px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide shadow-sm" style="background: #879A83; color: #FFFFFF;">
+                                Digitalni Proizvodi
+                            </div>
+                            <div id="renderCounter" class="text-xl font-bold opacity-60" style="color: #1A1816;">
+                                01 / 06
+                            </div>
+                        </div>
+
+                        <!-- Center Content: Title, Body, Frame -->
+                        <div class="my-auto space-y-8 z-10 flex flex-col justify-center">
+                            <h2 id="renderTitle" class="text-6xl font-bold leading-tight tracking-tight" style="font-family: 'Playfair Display', serif; color: #1A1816;">
+                                Naslov karusel objave ide ovde
+                            </h2>
+                            <p id="renderBody" class="text-3xl leading-relaxed opacity-90 font-normal" style="color: #1A1816;">
+                                Detaljan opis ili korak koji objašnjava vrednost za tvoju publiku i klijente.
+                            </p>
+
+                            <!-- Frame Render Container -->
+                            <div id="renderFrameContainer" class="hidden w-full flex justify-center py-4">
+                                <div id="renderFrameElement" class="overflow-hidden shadow-xl flex items-center justify-center bg-stone-200">
+                                    <img id="renderImage" src="" class="w-full h-full object-cover" alt="Slide image">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Footer: CTA & Signature -->
+                        <div class="flex justify-between items-end border-t pt-8 z-10" style="border-color: rgba(0,0,0,0.1);">
+                            <div id="renderCta" class="text-2xl font-bold tracking-wide" style="color: #D4AF37;">
+                                💡 Sačuvaj objavu i podeli sa prijateljima!
+                            </div>
+                            <div class="text-right">
+                                <p class="text-lg font-bold tracking-wider" style="color: #1A1816;">Marijana AI Digital Soul</p>
+                                <p class="text-xs opacity-60 uppercase tracking-widest font-semibold" style="color: #1A1816;">@marijanaforai</p>
+                            </div>
+                        </div>
+
+                        <!-- Decorative Background Gradient Element -->
+                        <div id="renderBgGlow" class="absolute -bottom-32 -right-32 w-96 h-96 rounded-full blur-3xl opacity-20 pointer-events-none" style="background: #879A83;"></div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bulk Import Modal -->
+    <div id="bulkModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-stone-950 border border-stone-800 rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-2xl">
+            <h3 class="text-lg font-bold text-gold-light">📝 Bulk Unos Teksta za Karusele</h3>
+            <p class="text-xs text-stone-400 leading-relaxed">
+                Nalepi tekst za više karusela odjednom.<br>
+                Koristi <code class="bg-stone-900 px-1.5 py-0.5 rounded text-sage-green">===</code> za odvajanje različitih karusela, <code class="bg-stone-900 px-1.5 py-0.5 rounded text-sage-green">---</code> za odvajanje slajdova unutar karusela, i <code class="bg-stone-900 px-1.5 py-0.5 rounded text-sage-green">CAPTION:</code> za opis objave.
+            </p>
+            <textarea id="bulkTextarea" rows="12" class="w-full bg-stone-900 border border-stone-800 rounded-xl p-4 text-sm text-stone-200 focus:border-sage-green outline-none font-mono" placeholder="Karusel 1&#10;---&#10;Badge | Naslov | Telo | CTA&#10;---&#10;Badge 2 | Naslov 2 | Telo 2 | CTA 2&#10;CAPTION: Ovo je opis prve objave...&#10;===&#10;Karusel 2&#10;..."></textarea>
+            <div class="flex justify-end gap-3 pt-2">
+                <button onclick="closeBulkModal()" class="bg-stone-800 hover:bg-stone-700 text-stone-300 px-4 py-2 rounded-xl text-sm font-medium transition">Otkaži</button>
+                <button onclick="processBulkInput()" class="bg-sage-green hover:bg-sage-dark text-white px-5 py-2 rounded-xl text-sm font-medium transition">Uvezi Karusele</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Offscreen Render Canvas for Image Export -->
+    <canvas id="exportCanvas" width="1080" height="1350" class="hidden"></canvas>
+
+    <!-- Application Script -->
+    <script>
+        // Themes definition
+        const themes = {
+            ivory: { bg1: '#FAF8F5', bg2: '#F0ECE1', text: '#1A1816', heading: '#1A1816', accent: '#879A83', gold: '#D4AF37', gradient: false },
+            'sage-gold': { bg1: '#F4F7F3', bg2: '#E5EFE2', text: '#2C352D', heading: '#1E261F', accent: '#D4AF37', gold: '#AA7C11', gradient: false },
+            violet: { bg1: '#1E1B2E', bg2: '#2D2640', text: '#F3F4F6', heading: '#FFFFFF', accent: '#9F7AEA', gold: '#D4AF37', gradient: true },
+            'green-gradient': { bg1: '#5F715C', bg2: '#2C352D', text: '#FFFFFF', heading: '#FFFFFF', accent: '#D4AF37', gold: '#F3F4F6', gradient: true },
+            dark: { bg1: '#121110', bg2: '#1A1816', text: '#E7E5E4', heading: '#FFFFFF', accent: '#D4AF37', gold: '#879A83', gradient: false }
+        };
+
+        // State Management
+        let carousels = [
+            {
+                caption: "🚀 Kako napraviti digitalni proizvod za 48 sati bez prethodnog iskustva!\n\nPročitajte karusel do kraja za korak-po-korak plan. 👉 Link u opisu profila!\n\n#DigitalniProizvodi #PasivnaZarada #OnlineBiznis #MarijanaDigitalSoul",
+                slides: [
+                    { badge: "Digitalni Proizvodi", title: "Od ideje do prvog digitalnog proizvoda za 48h", body: "Ne treba ti 6 meseci da napraviš prvu e-knjigu, šablon ili vodič. Evo plana za jedan vikend:", cta: "💡 Sačuvaj objavu za kasnije!", frame: "none", image: "" },
+                    { badge: "Korak 1", title: "Definiši jasnu bolnu tačku publike", body: "Pronađi problem koji ljudi već pokušavaju da reše na teži način i ponudi im brzu, elegantnu prečicu.", cta: "📌 Prati profil za još saveta", frame: "rounded", image: "" },
+                    { badge: "Korak 2", title: "Kreiraj sadržaj u Canvi ili Notion-u", body: "Koristi minimalističke šablone sa ivory pozadinom i sage green detaljima za profesionalan izgled.", cta: "✨ Kreiraj sa stilom", frame: "card", image: "" },
+                    { badge: "Korak 3", title: "Postavi prodaju na Payhip ili Gumroad", body: "Automatizuj isporuku tako da kupac dobije materijal u sekundi nakon uplate.", cta: "🚀 Pokreni biznis danas", frame: "arch", image: "" },
+                    { badge: "Korak 4", title: "Promoviši kroz vrednost i karusele", body: "Delimično otkrij proces, a kompletan sistem ponudi u svom digitalnom proizvodu.", cta: "💬 Piši u komentaru za link", frame: "circle", image: "" },
+                    { badge: "Zlata Vredan Savet", title: "Tvoj prvi proizvod ne mora biti savršen", body: "Mora samo da rešava jedan specifičan problem. Lansiraj brzo i unapređuj u hodu!", cta: "👉 Link u opisu profila!", frame: "none", image: "" }
+                ]
+            }
+        ];
+
+        let currentCarouselIndex = 0;
+        let currentSlideIndex = 0;
+        let currentThemeKey = 'ivory';
+
+        // Initialize App
+        window.onload = function() {
+            renderCarouselTabs();
+            renderSlideTabs();
+            loadSlideToForm();
+            updatePreview();
+        };
+
+        // Theme Switcher
+        function changeTheme(themeKey) {
+            currentThemeKey = themeKey;
+            const t = themes[themeKey];
+            if (t) {
+                document.getElementById('customBg1').value = t.bg1;
+                document.getElementById('customBg1Hex').value = t.bg1;
+                document.getElementById('customBg2').value = t.bg2;
+                document.getElementById('customBg2Hex').value = t.bg2;
+                document.getElementById('customText').value = t.text;
+                document.getElementById('customTextHex').value = t.text;
+                document.getElementById('customHeading').value = t.heading;
+                document.getElementById('customHeadingHex').value = t.heading;
+                document.getElementById('customAccent').value = t.accent;
+                document.getElementById('customAccentHex').value = t.accent;
+                document.getElementById('customGold').value = t.gold;
+                document.getElementById('customGoldHex').value = t.gold;
+            }
+            updatePreview();
+        }
+
+        function updateCustomColors() {
+            document.getElementById('customBg1Hex').value = document.getElementById('customBg1').value;
+            document.getElementById('customBg2Hex').value = document.getElementById('customBg2').value;
+            document.getElementById('customTextHex').value = document.getElementById('customText').value;
+            document.getElementById('customHeadingHex').value = document.getElementById('customHeading').value;
+            document.getElementById('customAccentHex').value = document.getElementById('customAccent').value;
+            document.getElementById('customGoldHex').value = document.getElementById('customGold').value;
+            updatePreview();
+        }
+
+        function syncColorInput(pickerId, val) {
+            if (val.startsWith('#') && (val.length === 4 || val.length === 7)) {
+                document.getElementById(pickerId).value = val;
+                updateCustomColors();
+            }
+        }
+
+        function invertColors() {
+            const bg1 = document.getElementById('customBg1').value;
+            const txt = document.getElementById('customText').value;
+            document.getElementById('customBg1').value = txt;
+            document.getElementById('customBg1Hex').value = txt;
+            document.getElementById('customText').value = bg1;
+            document.getElementById('customTextHex').value = bg1;
+            document.getElementById('customHeading').value = bg1;
+            document.getElementById('customHeadingHex').value = bg1;
+            updateCustomColors();
+        }
+
+        function saveCustomPalette() {
+            alert("Vaša custom paleta je uspešno primenjena!");
+        }
+
+        function updateGlobalStyles() {
+            updatePreview();
+        }
+
+        // Carousel Management
+        function addNewCarousel() {
+            carousels.push({
+                caption: "🚀 Novi digitalni proizvod je tu!\n\n#DigitalniProizvodi #MarijanaAIDigitalSoul",
+                slides: [
+                    { badge: "Novi Proizvod", title: "Naslov novog karusela", body: "Ovde unesi tekst i opis...", cta: "👉 Saznaj više", frame: "none", image: "" }
+                ]
+            });
+            currentCarouselIndex = carousels.length - 1;
+            currentSlideIndex = 0;
+            renderCarouselTabs();
+            renderSlideTabs();
+            loadSlideToForm();
+            updatePreview();
+        }
+
+        function selectCarousel(index) {
+            currentCarouselIndex = index;
+            currentSlideIndex = 0;
+            renderCarouselTabs();
+            renderSlideTabs();
+            loadSlideToForm();
+            updatePreview();
+        }
+
+        function renderCarouselTabs() {
+            const container = document.getElementById('carouselTabsList');
+            container.innerHTML = '';
+            carousels.forEach((c, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `px-3 py-1.5 rounded-xl text-xs font-medium transition border ${idx === currentCarouselIndex ? 'bg-sage-green text-white border-sage-green shadow' : 'bg-stone-900 text-stone-300 border-stone-800 hover:bg-stone-800'}`;
+                btn.innerText = `Karusel #${idx + 1}`;
+                btn.onclick = () => selectCarousel(idx);
+                container.appendChild(btn);
+            });
+            document.getElementById('carouselCountBadge').innerText = `${currentCarouselIndex + 1} od ${carousels.length}`;
+        }
+
+        // Slide Management
+        function addSlideToCurrent() {
+            carousels[currentCarouselIndex].slides.push({
+                badge: `Korak ${carousels[currentCarouselIndex].slides.length + 1}`,
+                title: "Novi naslov slajda",
+                body: "Unesi tekst ovde...",
+                cta: "💡 Sačuvaj objavu",
+                frame: "none",
+                image: ""
+            });
+            currentSlideIndex = carousels[currentCarouselIndex].slides.length - 1;
+            renderSlideTabs();
+            loadSlideToForm();
+            updatePreview();
+        }
+
+        function removeCurrentSlide() {
+            if (carousels[currentCarouselIndex].slides.length <= 1) {
+                alert("Karusel mora imati bar jedan slajd!");
+                return;
+            }
+            carousels[currentCarouselIndex].slides.splice(currentSlideIndex, 1);
+            if (currentSlideIndex >= carousels[currentCarouselIndex].slides.length) {
+                currentSlideIndex = carousels[currentCarouselIndex].slides.length - 1;
+            }
+            renderSlideTabs();
+            loadSlideToForm();
+            updatePreview();
+        }
+
+        function selectSlide(index) {
+            currentSlideIndex = index;
+            renderSlideTabs();
+            loadSlideToForm();
+            updatePreview();
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                renderSlideTabs();
+                loadSlideToForm();
+                updatePreview();
+            }
+        }
+
+        function nextSlide() {
+            const total = carousels[currentCarouselIndex].slides.length;
+            if (currentSlideIndex < total - 1) {
+                currentSlideIndex++;
+                renderSlideTabs();
+                loadSlideToForm();
+                updatePreview();
+            }
+        }
+
+        function renderSlideTabs() {
+            const container = document.getElementById('slideTabsList');
+            container.innerHTML = '';
+            const slides = carousels[currentCarouselIndex].slides;
+            slides.forEach((s, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `w-8 h-8 rounded-lg text-xs font-bold transition border ${idx === currentSlideIndex ? 'bg-gold-light text-stone-950 border-gold-light shadow' : 'bg-stone-900 text-stone-400 border-stone-800 hover:bg-stone-800'}`;
+                btn.innerText = idx + 1;
+                btn.onclick = () => selectSlide(idx);
+                container.appendChild(btn);
+            });
+        }
+
+        function loadSlideToForm() {
+            const slide = carousels[currentCarouselIndex].slides[currentSlideIndex];
+            document.getElementById('inputBadge').value = slide.badge || '';
+            document.getElementById('inputTitle').value = slide.title || '';
+            document.getElementById('inputBody').value = slide.body || '';
+            document.getElementById('inputCta').value = slide.cta || '';
+            document.getElementById('inputFrameType').value = slide.frame || 'none';
+            document.getElementById('inputCaption').value = carousels[currentCarouselIndex].caption || '';
+            document.getElementById('previewIndicator').innerText = `Pregled slajda ${currentSlideIndex + 1} od ${carousels[currentCarouselIndex].slides.length}`;
+        }
+
+        function updateActiveSlideData() {
+            const slide = carousels[currentCarouselIndex].slides[currentSlideIndex];
+            slide.badge = document.getElementById('inputBadge').value;
+            slide.title = document.getElementById('inputTitle').value;
+            slide.body = document.getElementById('inputBody').value;
+            slide.cta = document.getElementById('inputCta').value;
+            slide.frame = document.getElementById('inputFrameType').value;
+            updatePreview();
+        }
+
+        function updateCaptionData() {
+            carousels[currentCarouselIndex].caption = document.getElementById('inputCaption').value;
+        }
+
+        function copyCaption() {
+            const text = document.getElementById('inputCaption').value;
+            navigator.clipboard.writeText(text);
+            alert("Instagram opis je kopiran u memoriju!");
+        }
+
+        function insertIntoCaption(txt) {
+            const ta = document.getElementById('inputCaption');
+            ta.value += "\n" + txt;
+            updateCaptionData();
+        }
+
+        // Image Handling
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const slide = carousels[currentCarouselIndex].slides[currentSlideIndex];
+                    slide.image = event.target.result;
+                    updatePreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function applyImageToAllSlides() {
+            const slide = carousels[currentCarouselIndex].slides[currentSlideIndex];
+            if (!slide.image) {
+                alert("Nema izabrane slike na trenutnom slajdu!");
+                return;
+            }
+            carousels[currentCarouselIndex].slides.forEach(s => {
+                s.image = slide.image;
+                s.frame = slide.frame;
+            });
+            alert("Slika je uspešno primenjena na sve slajdove u ovom karuselu!");
+            updatePreview();
+        }
+
+        function removeImageFromSlide() {
+            const slide = carousels[currentCarouselIndex].slides[currentSlideIndex];
+            slide.image = "";
+            slide.frame = "none";
+            document.getElementById('inputFrameType').value = "none";
+            updatePreview();
+        }
+
+        // Update Visual Preview
+        function updatePreview() {
+            const slide = carousels[currentCarouselIndex].slides[currentSlideIndex];
+            const totalSlides = carousels[currentCarouselIndex].slides.length;
+            
+            // Colors
+            const bg1 = document.getElementById('customBg1').value;
+            const bg2 = document.getElementById('customBg2').value;
+            const textColor = document.getElementById('customText').value;
+            const headingColor = document.getElementById('customHeading').value;
+            const accentColor = document.getElementById('customAccent').value;
+            const goldColor = document.getElementById('customGold').value;
+            const titleFont = document.getElementById('fontTitleSelect').value;
+
+            const renderSlide = document.getElementById('renderSlide');
+            const isGrad = themes[currentThemeKey]?.gradient;
+
+            if (isGrad) {
+                renderSlide.style.background = `linear-gradient(135deg, ${bg1}, ${bg2})`;
+            } else {
+                renderSlide.style.background = bg1;
+            }
+
+            // Elements
+            document.getElementById('renderBadge').innerText = slide.badge || '';
+            document.getElementById('renderBadge').style.background = accentColor;
+            document.getElementById('renderBadge').style.color = '#FFFFFF';
+
+            document.getElementById('renderCounter').innerText = `${String(currentSlideIndex + 1).padStart(2, '0')} / ${String(totalSlides).padStart(2, '0')}`;
+            document.getElementById('renderCounter').style.color = headingColor;
+
+            const titleEl = document.getElementById('renderTitle');
+            titleEl.innerText = slide.title || '';
+            titleEl.style.fontFamily = titleFont;
+            titleEl.style.color = headingColor;
+
+            const bodyEl = document.getElementById('renderBody');
+            bodyEl.innerText = slide.body || '';
+            bodyEl.style.color = textColor;
+
+            const ctaEl = document.getElementById('renderCta');
+            ctaEl.innerText = slide.cta || '';
+            ctaEl.style.color = goldColor;
+
+            // Frame and Image
+            const frameContainer = document.getElementById('renderFrameContainer');
+            const frameElement = document.getElementById('renderFrameElement');
+            const renderImg = document.getElementById('renderImage');
+
+            if (slide.frame && slide.frame !== 'none' && slide.image) {
+                frameContainer.classList.remove('hidden');
+                renderImg.src = slide.image;
+                
+                frameElement.className = "overflow-hidden shadow-2xl flex items-center justify-center bg-stone-300";
+                if (slide.frame === 'rounded') {
+                    frameElement.style.width = "100%";
+                    frameElement.style.height = "380px";
+                    frameElement.style.borderRadius = "24px";
+                    frameElement.style.border = `3px solid ${goldColor}`;
+                } else if (slide.frame === 'circle') {
+                    frameElement.style.width = "320px";
+                    frameElement.style.height = "320px";
+                    frameElement.style.borderRadius = "9999px";
+                    frameElement.style.border = `5px solid ${goldColor}`;
+                } else if (slide.frame === 'arch') {
+                    frameElement.style.width = "100%";
+                    frameElement.style.height = "400px";
+                    frameElement.style.borderTopLeftRadius = "200px";
+                    frameElement.style.borderTopRightRadius = "200px";
+                    frameElement.style.borderBottomLeftRadius = "24px";
+                    frameElement.style.borderBottomRightRadius = "24px";
+                    frameElement.style.border = `3px solid ${goldColor}`;
+                } else if (slide.frame === 'card') {
+                    frameElement.style.width = "100%";
+                    frameElement.style.height = "360px";
+                    frameElement.style.borderRadius = "16px";
+                    frameElement.style.border = `2px solid ${accentColor}`;
+                }
+            } else {
+                frameContainer.classList.add('hidden');
+            }
+        }
+
+        // Bulk Modal Controls
+        function openBulkModal() {
+            document.getElementById('bulkModal').classList.remove('hidden');
+        }
+
+        function closeBulkModal() {
+            document.getElementById('bulkModal').classList.add('hidden');
+        }
+
+        function processBulkInput() {
+            const raw = document.getElementById('bulkTextarea').value;
+            if (!raw.trim()) return;
+
+            const carouselChunks = raw.split('===');
+            const newCarousels = [];
+
+            carouselChunks.forEach(chunk => {
+                let caption = "🚀 Novi digitalni proizvod!\n\n#DigitalniProizvodi #MarijanaAIDigitalSoul";
+                let slidesRaw = chunk;
+
+                if (chunk.includes('CAPTION:')) {
+                    const parts = chunk.split('CAPTION:');
+                    slidesRaw = parts[0];
+                    caption = parts[1].trim();
+                }
+
+                const slideChunks = slidesRaw.split('---');
+                const slides = [];
+
+                slideChunks.forEach((sChunk, sIdx) => {
+                    const lines = sChunk.trim().split('\n').filter(l => l.trim() !== '');
+                    if (lines.length > 0) {
+                        let badge = lines[0]?.includes('|') ? lines[0].split('|')[0].trim() : `Korak ${sIdx + 1}`;
+                        let title = lines[0]?.includes('|') ? lines[0].split('|')[1]?.trim() : lines[0];
+                        let body = lines[1] || "Opis koraka ili vrednosti...";
+                        let cta = lines[2] || "💡 Sačuvaj objavu!";
+                        slides.push({ badge, title, body, cta, frame: "none", image: "" });
+                    }
+                });
+
+                if (slides.length > 0) {
+                    newCarousels.push({ caption, slides });
+                }
+            });
+
+            if (newCarousels.length > 0) {
+                carousels = newCarousels;
+                currentCarouselIndex = 0;
+                currentSlideIndex = 0;
+                renderCarouselTabs();
+                renderSlideTabs();
+                loadSlideToForm();
+                updatePreview();
+                closeBulkModal();
+                alert("Uspešno uvezeni novi karuseli!");
+            } else {
+                alert("Format unosa nije prepoznat. Proveri sintaksu.");
+            }
+        }
+
+        // Download Functions (ZIP with JSZip)
+        async function downloadCurrentCarouselZip() {
+            const zip = new JSZip();
+            const carousel = carousels[currentCarouselIndex];
+            const folder = zip.folder(`karusel-${currentCarouselIndex + 1}`);
+
+            folder.file("opis-objave.txt", carousel.caption);
+
+            const canvas = document.getElementById('exportCanvas');
+            const ctx = canvas.getContext('2d');
+
+            for (let i = 0; i < carousel.slides.length; i++) {
+                currentSlideIndex = i;
+                renderSlideTabs();
+                loadSlideToForm();
+                updatePreview();
+
+                // Render HTML to Canvas using data URL
+                const htmlContent = document.getElementById('renderSlide').outerHTML;
+                const svgData = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350"><foreignObject width="100%" height="100%">${htmlContent}</foreignObject></svg>`;
+                
+                await new Promise((resolve) => {
+                    const img = new Image();
+                    img.onload = function() {
+                        ctx.clearRect(0, 0, 1080, 1350);
+                        ctx.drawImage(img, 0, 0);
+                        canvas.toBlob(function(blob) {
+                            folder.file(`slajd-${i + 1}.png`, blob);
+                            resolve();
+                        }, 'image/png');
+                    };
+                    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgData);
+                });
+            }
+
+            zip.generateAsync({ type: "blob" }).then(function(content) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(content);
+                link.download = `karusel-${currentCarouselIndex + 1}-marijana-ai.zip`;
+                link.click();
+            });
+        }
+
+        async function downloadAllZips() {
+            const zip = new JSZip();
+            const canvas = document.getElementById('exportCanvas');
+            const ctx = canvas.getContext('2d');
+
+            for (let cIdx = 0; cIdx < carousels.length; cIdx++) {
+                currentCarouselIndex = cIdx;
+                const carousel = carousels[cIdx];
+                const folder = zip.folder(`karusel-${cIdx + 1}`);
+                folder.file("opis-objave.txt", carousel.caption);
+
+                for (let i = 0; i < carousel.slides.length; i++) {
+                    currentSlideIndex = i;
+                    renderCarouselTabs();
+                    renderSlideTabs();
+                    loadSlideToForm();
+                    updatePreview();
+
+                    const htmlContent = document.getElementById('renderSlide').outerHTML;
+                    const svgData = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350"><foreignObject width="100%" height="100%">${htmlContent}</foreignObject></svg>`;
+                    
+                    await new Promise((resolve) => {
+                        const img = new Image();
+                        img.onload = function() {
+                            ctx.clearRect(0, 0, 1080, 1350);
+                            ctx.drawImage(img, 0, 0);
+                            canvas.toBlob(function(blob) {
+                                folder.file(`slajd-${i + 1}.png`, blob);
+                                resolve();
+                            }, 'image/png');
+                        };
+                        img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgData);
+                    });
+                }
+            }
+
+            zip.generateAsync({ type: "blob" }).then(function(content) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(content);
+                link.download = `sve-karusel-objave-marijana-ai.zip`;
+                link.click();
+            });
+        }
+    </script>
+</body>
+</html>
