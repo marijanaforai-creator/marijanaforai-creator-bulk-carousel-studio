@@ -36,25 +36,25 @@
         }
     </style>
 </head>
-<body class="bg-[#130E1F] text-stone-100 font-['DM_Sans',sans-serif] min-h-screen flex flex-col">
+<body class="bg-stone-900 text-stone-100 font-['DM_Sans',sans-serif] min-h-screen flex flex-col">
 
     <!-- Top Navigation -->
-    <header class="bg-[#1C152E] border-b border-amber-500/25 px-6 py-4 flex flex-wrap justify-between items-center gap-4 sticky top-0 z-50 shadow-lg">
-        <div class="flex items-center gap-3.5">
-            <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-[#AA7C11] via-[#D4AF37] to-[#6B46C1] flex items-center justify-center text-stone-950 font-bold text-lg shadow-md border border-amber-400/40">MF</div>
+    <header class="bg-stone-950 border-b border-stone-800 px-6 py-4 flex flex-wrap justify-between items-center gap-4 sticky top-0 z-50">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-gold-dark via-sage-green to-violet-main flex items-center justify-center text-white font-bold text-lg shadow-lg">M</div>
             <div>
-                <h1 class="font-bold text-base text-amber-300 tracking-wide font-['Playfair_Display',serif]">Bulk Carousel Studio Pro</h1>
-                <p class="text-xs text-amber-400/70 font-medium tracking-wider uppercase">Marijana AI Digital Soul</p>
+                <h1 class="font-bold text-lg text-stone-100 tracking-wide">Bulk Carousel Studio Pro</h1>
+                <p class="text-xs text-sage-green font-medium">Marijana AI Digital Soul</p>
             </div>
         </div>
         <div class="flex flex-wrap items-center gap-3">
-            <button onclick="openBulkModal()" class="bg-[#241B3B] hover:bg-[#2F244E] text-amber-200 px-4 py-2 rounded-xl text-sm font-medium transition flex items-center gap-2 border border-amber-500/30 shadow-inner">
+            <button onclick="openBulkModal()" class="bg-stone-800 hover:bg-stone-700 text-stone-200 px-4 py-2 rounded-xl text-sm font-medium transition flex items-center gap-2 border border-stone-700">
                 <span>📝 Bulk Unos Teksta</span>
             </button>
-            <button onclick="addNewCarousel()" class="bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-stone-950 px-4 py-2 rounded-xl text-sm font-bold transition shadow-md flex items-center gap-2">
+            <button onclick="addNewCarousel()" class="bg-sage-green hover:bg-sage-dark text-white px-4 py-2 rounded-xl text-sm font-medium transition shadow-md flex items-center gap-2">
                 <span>➕ Dodaj Novi Karusel</span>
             </button>
-            <button onclick="downloadAllZips()" class="bg-gradient-to-r from-[#D4AF37] to-amber-400 hover:from-amber-400 hover:to-[#D4AF37] text-stone-950 font-bold px-5 py-2 rounded-xl text-sm transition shadow-lg flex items-center gap-2 border border-amber-300">
+            <button onclick="downloadAllZips()" class="bg-gradient-to-r from-gold-dark to-amber-600 hover:from-amber-600 hover:to-gold-dark text-stone-950 font-bold px-5 py-2 rounded-xl text-sm transition shadow-lg flex items-center gap-2">
                 <span>📥 Preuzmi Sve (ZIP)</span>
             </button>
         </div>
@@ -64,33 +64,29 @@
     <main class="flex-1 max-w-7xl w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         <!-- Sidebar Controls -->
-        <aside class="lg:col-span-5 space-y-6 bg-[#181126] p-6 rounded-2xl border border-amber-500/20 shadow-2xl overflow-y-auto max-h-[calc(100vh-140px)]">
+        <aside class="lg:col-span-5 space-y-6 bg-stone-950 p-6 rounded-2xl border border-stone-800 shadow-xl overflow-y-auto max-h-[calc(100vh-140px)]">
             
             <!-- Global Theme & Color Customizer -->
             <div class="space-y-4">
-                <h2 class="text-md font-semibold text-amber-300 border-b border-amber-500/20 pb-2 flex justify-between items-center font-['Playfair_Display',serif]">
+                <h2 class="text-md font-semibold text-gold-light border-b border-stone-800 pb-2 flex justify-between items-center">
                     <span>🎨 Dizajn i Palete Boja</span>
-                    <button onclick="invertColors()" class="text-xs bg-[#241B3B] hover:bg-[#2F244E] text-amber-300 px-2.5 py-1 rounded-lg border border-amber-500/30">Invertuj</button>
+                    <button onclick="invertColors()" class="text-xs bg-stone-800 hover:bg-stone-700 text-stone-300 px-2.5 py-1 rounded-lg border border-stone-700">Invertuj</button>
                 </h2>
                 
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="text-xs text-amber-200/70 block mb-1">Tema / Paleta</label>
-                        <select id="themeSelect" onchange="changeTheme(this.value)" class="w-full bg-[#130E1F] border border-amber-500/30 rounded-xl p-2.5 text-sm text-stone-200 focus:border-amber-400 outline-none">
+                        <label class="text-xs text-stone-400 block mb-1">Tema / Paleta</label>
+                        <select id="themeSelect" onchange="changeTheme(this.value)" class="w-full bg-stone-900 border border-stone-700 rounded-xl p-2.5 text-sm text-stone-200 focus:border-sage-green outline-none">
                             <option value="ivory">Ivory & Sage (Brend)</option>
                             <option value="sage-gold">Sage & Gold Editorial</option>
                             <option value="violet">Deep Violet Luxury</option>
                             <option value="green-gradient">Zeleni Gradijent</option>
-                            <option value="amber-luxury">Amber Luxury (Gradient)</option>
-                            <option value="rose-gold">Rose Gold (Gradient)</option>
-                            <option value="emerald-gold">Emerald Gold (Gradient)</option>
-                            <option value="midnight-violet">Midnight Violet (Gradient)</option>
                             <option value="dark">Dark Espresso</option>
                         </select>
                     </div>
                     <div>
-                        <label class="text-xs text-amber-200/70 block mb-1">Font Naslova</label>
-                        <select id="fontTitleSelect" onchange="updateGlobalStyles()" class="w-full bg-[#130E1F] border border-amber-500/30 rounded-xl p-2.5 text-sm text-stone-200 focus:border-amber-400 outline-none">
+                        <label class="text-xs text-stone-400 block mb-1">Font Naslova</label>
+                        <select id="fontTitleSelect" onchange="updateGlobalStyles()" class="w-full bg-stone-900 border border-stone-700 rounded-xl p-2.5 text-sm text-stone-200 focus:border-sage-green outline-none">
                             <option value="'Playfair Display', serif">Playfair Display</option>
                             <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
                             <option value="'Montserrat', sans-serif">Montserrat</option>
@@ -101,49 +97,49 @@
                 </div>
 
                 <!-- Custom Color Studio Grid -->
-                <div class="bg-[#130E1F]/90 p-3.5 rounded-xl border border-amber-500/20 space-y-3">
-                    <p class="text-xs font-semibold text-amber-200">Slobodan izbor boja:</p>
+                <div class="bg-stone-900/80 p-3.5 rounded-xl border border-stone-800 space-y-3">
+                    <p class="text-xs font-semibold text-stone-300">Slobodan izbor boja:</p>
                     <div class="grid grid-cols-3 gap-2 text-xs">
                         <div>
                             <span class="text-stone-400 block mb-1">Pozadina 1</span>
                             <div class="flex items-center gap-2">
                                 <input type="color" id="customBg1" value="#FAF8F5" onchange="updateCustomColors()" class="w-8 h-8 rounded bg-transparent cursor-pointer">
-                                <input type="text" id="customBg1Hex" value="#FAF8F5" onchange="syncColorInput('customBg1', this.value)" class="w-16 bg-[#181126] border border-amber-500/30 rounded px-1 text-[11px] text-stone-200">
+                                <input type="text" id="customBg1Hex" value="#FAF8F5" onchange="syncColorInput('customBg1', this.value)" class="w-16 bg-stone-800 border border-stone-700 rounded px-1 text-[11px] text-stone-200">
                             </div>
                         </div>
                         <div>
                             <span class="text-stone-400 block mb-1">Pozadina 2</span>
                             <div class="flex items-center gap-2">
                                 <input type="color" id="customBg2" value="#F0ECE1" onchange="updateCustomColors()" class="w-8 h-8 rounded bg-transparent cursor-pointer">
-                                <input type="text" id="customBg2Hex" value="#F0ECE1" onchange="syncColorInput('customBg2', this.value)" class="w-16 bg-[#181126] border border-amber-500/30 rounded px-1 text-[11px] text-stone-200">
+                                <input type="text" id="customBg2Hex" value="#F0ECE1" onchange="syncColorInput('customBg2', this.value)" class="w-16 bg-stone-800 border border-stone-700 rounded px-1 text-[11px] text-stone-200">
                             </div>
                         </div>
                         <div>
                             <span class="text-stone-400 block mb-1">Boja Teksta</span>
                             <div class="flex items-center gap-2">
                                 <input type="color" id="customText" value="#1A1816" onchange="updateCustomColors()" class="w-8 h-8 rounded bg-transparent cursor-pointer">
-                                <input type="text" id="customTextHex" value="#1A1816" onchange="syncColorInput('customText', this.value)" class="w-16 bg-[#181126] border border-amber-500/30 rounded px-1 text-[11px] text-stone-200">
+                                <input type="text" id="customTextHex" value="#1A1816" onchange="syncColorInput('customText', this.value)" class="w-16 bg-stone-800 border border-stone-700 rounded px-1 text-[11px] text-stone-200">
                             </div>
                         </div>
                         <div>
                             <span class="text-stone-400 block mb-1">Naslovi</span>
                             <div class="flex items-center gap-2">
                                 <input type="color" id="customHeading" value="#1A1816" onchange="updateCustomColors()" class="w-8 h-8 rounded bg-transparent cursor-pointer">
-                                <input type="text" id="customHeadingHex" value="#1A1816" onchange="syncColorInput('customHeading', this.value)" class="w-16 bg-[#181126] border border-amber-500/30 rounded px-1 text-[11px] text-stone-200">
+                                <input type="text" id="customHeadingHex" value="#1A1816" onchange="syncColorInput('customHeading', this.value)" class="w-16 bg-stone-800 border border-stone-700 rounded px-1 text-[11px] text-stone-200">
                             </div>
                         </div>
                         <div>
                             <span class="text-stone-400 block mb-1">Akcenti / Bedž</span>
                             <div class="flex items-center gap-2">
                                 <input type="color" id="customAccent" value="#879A83" onchange="updateCustomColors()" class="w-8 h-8 rounded bg-transparent cursor-pointer">
-                                <input type="text" id="customAccentHex" value="#879A83" onchange="syncColorInput('customAccent', this.value)" class="w-16 bg-[#181126] border border-amber-500/30 rounded px-1 text-[11px] text-stone-200">
+                                <input type="text" id="customAccentHex" value="#879A83" onchange="syncColorInput('customAccent', this.value)" class="w-16 bg-stone-800 border border-stone-700 rounded px-1 text-[11px] text-stone-200">
                             </div>
                         </div>
                         <div>
                             <span class="text-stone-400 block mb-1">Okviri / Zlato</span>
                             <div class="flex items-center gap-2">
                                 <input type="color" id="customGold" value="#D4AF37" onchange="updateCustomColors()" class="w-8 h-8 rounded bg-transparent cursor-pointer">
-                                <input type="text" id="customGoldHex" value="#D4AF37" onchange="syncColorInput('customGold', this.value)" class="w-16 bg-[#181126] border border-amber-500/30 rounded px-1 text-[11px] text-stone-200">
+                                <input type="text" id="customGoldHex" value="#D4AF37" onchange="syncColorInput('customGold', this.value)" class="w-16 bg-stone-800 border border-stone-700 rounded px-1 text-[11px] text-stone-200">
                             </div>
                         </div>
                     </div>
@@ -153,19 +149,19 @@
             <!-- Carousel Selector Tabs -->
             <div class="space-y-3">
                 <div class="flex justify-between items-center">
-                    <h2 class="text-md font-semibold text-amber-300 font-['Playfair_Display',serif]">📚 Karuseli (Objave)</h2>
-                    <span id="carouselCountBadge" class="text-xs bg-[#241B3B] px-2.5 py-1 rounded-full text-amber-300 font-bold border border-amber-500/30">1 od 1</span>
+                    <h2 class="text-md font-semibold text-gold-light">📚 Karuseli (Objave)</h2>
+                    <span id="carouselCountBadge" class="text-xs bg-stone-800 px-2.5 py-1 rounded-full text-sage-green font-bold">1 od 1</span>
                 </div>
                 <div id="carouselTabsList" class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin"></div>
             </div>
 
             <!-- Slide Editor Controls -->
-            <div class="space-y-4 pt-2 border-t border-amber-500/20">
+            <div class="space-y-4 pt-2 border-t border-stone-800">
                 <div class="flex justify-between items-center">
-                    <h2 class="text-md font-semibold text-amber-300 font-['Playfair_Display',serif]">✏️ Uređivanje Slajdova</h2>
+                    <h2 class="text-md font-semibold text-gold-light">✏️ Uređivanje Slajdova</h2>
                     <div class="flex gap-1.5">
-                        <button onclick="addSlideToCurrent()" class="text-xs bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 px-3 py-1 rounded-lg font-medium border border-amber-500/40">+ Slajd</button>
-                        <button onclick="removeCurrentSlide()" class="text-xs bg-red-500/20 text-red-300 hover:bg-red-500/30 px-3 py-1 rounded-lg font-medium border border-red-500/40">Obriši</button>
+                        <button onclick="addSlideToCurrent()" class="text-xs bg-sage-green/20 text-sage-green hover:bg-sage-green/30 px-3 py-1 rounded-lg font-medium border border-sage-green/40">+ Slajd</button>
+                        <button onclick="removeCurrentSlide()" class="text-xs bg-red-500/20 text-red-400 hover:bg-red-500/30 px-3 py-1 rounded-lg font-medium border border-red-500/40">Obriši</button>
                     </div>
                 </div>
 
@@ -173,35 +169,123 @@
                 <div id="slideTabsList" class="flex flex-wrap gap-2"></div>
 
                 <!-- Active Slide Form -->
-                <div class="bg-[#130E1F] p-4 rounded-xl border border-amber-500/20 space-y-3" id="activeSlideForm">
+                <div class="bg-stone-900 p-4 rounded-xl border border-stone-800 space-y-3" id="activeSlideForm">
                     <div>
-                        <label class="text-xs text-amber-200/70 block mb-1">Badge / Oznaka gornja</label>
-                        <input type="text" id="inputBadge" oninput="updateActiveSlideData()" class="w-full bg-[#181126] border border-amber-500/30 rounded-xl p-2.5 text-sm text-stone-200 focus:border-amber-400 outline-none">
+                        <label class="text-xs text-stone-400 block mb-1">Badge / Oznaka gornja</label>
+                        <input type="text" id="inputBadge" oninput="updateActiveSlideData()" class="w-full bg-stone-950 border border-stone-700 rounded-xl p-2.5 text-sm text-stone-200 focus:border-sage-green outline-none">
                     </div>
                     <div>
-                        <label class="text-xs text-amber-200/70 block mb-1">Naslov (Glavni tekst)</label>
-                        <textarea id="inputTitle" rows="2" oninput="updateActiveSlideData()" class="w-full bg-[#181126] border border-amber-500/30 rounded-xl p-2.5 text-sm text-stone-200 focus:border-amber-400 outline-none"></textarea>
+                        <label class="text-xs text-stone-400 block mb-1">Naslov (Glavni tekst)</label>
+                        <textarea id="inputTitle" rows="2" oninput="updateActiveSlideData()" class="w-full bg-stone-950 border border-stone-700 rounded-xl p-2.5 text-sm text-stone-200 focus:border-sage-green outline-none"></textarea>
                     </div>
                     <div>
-                        <label class="text-xs text-amber-200/70 block mb-1">Telo teksta / Opis</label>
-                        <textarea id="inputBody" rows="3" oninput="updateActiveSlideData()" class="w-full bg-[#181126] border border-amber-500/30 rounded-xl p-2.5 text-sm text-stone-200 focus:border-amber-400 outline-none"></textarea>
+                        <label class="text-xs text-stone-400 block mb-1">Telo teksta / Opis</label>
+                        <textarea id="inputBody" rows="3" oninput="updateActiveSlideData()" class="w-full bg-stone-950 border border-stone-700 rounded-xl p-2.5 text-sm text-stone-200 focus:border-sage-green outline-none"></textarea>
                     </div>
 
                     <!-- Font Size & Position Customizers per Slide -->
-                    <div class="bg-[#181126] p-3.5 rounded-xl border border-amber-500/20 space-y-3">
-                        <p class="text-xs font-semibold text-amber-300 font-['Playfair_Display',serif]">🎛️ Veličina i Pozicija Teksta (ovaj slajd)</p>
+                    <div class="bg-stone-950 p-3.5 rounded-xl border border-stone-800 space-y-3">
+                        <p class="text-xs font-semibold text-gold-light">🎛️ Veličina i Pozicija Teksta (ovaj slajd)</p>
                         
                         <div class="grid grid-cols-2 gap-3">
                             <div>
-                                <div class="flex justify-between text-[11px] text-amber-200/70 mb-1">
+                                <div class="flex justify-between text-[11px] text-stone-400 mb-1">
                                     <span>Veličina naslova:</span>
-                                    <span id="valTitleSize" class="text-amber-400 font-bold">60px</span>
+                                    <span id="valTitleSize" class="text-gold-light font-bold">60px</span>
                                 </div>
-                                <input type="range" id="inputTitleSize" min="32" max="96" value="60" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
+                                <input type="range" id="inputTitleSize" min="32" max="96" value="60" oninput="updateActiveSlideData()" class="w-full accent-sage-green cursor-pointer">
                             </div>
                             <div>
-                                <div class="flex justify-between text-[11px] text-amber-200/70 mb-1">
+                                <div class="flex justify-between text-[11px] text-stone-400 mb-1">
                                     <span>Veličina teksta:</span>
-                                    <span id="valBodySize" class="text-amber-400 font-bold">30px</span>
+                                    <span id="valBodySize" class="text-gold-light font-bold">30px</span>
                                 </div>
-                                <input type="range" id="inputBodySize" min="20" max="48" value
+                                <input type="range" id="inputBodySize" min="20" max="48" value="30" oninput="updateActiveSlideData()" class="w-full accent-sage-green cursor-pointer">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 pt-1">
+                            <div>
+                                <div class="flex justify-between text-[11px] text-stone-400 mb-1">
+                                    <span>Naslov - Pozicija X:</span>
+                                    <span id="valTitleX" class="text-gold-light font-bold">0px</span>
+                                </div>
+                                <input type="range" id="inputTitleX" min="-400" max="400" value="0" oninput="updateActiveSlideData()" class="w-full accent-sage-green cursor-pointer">
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[11px] text-stone-400 mb-1">
+                                    <span>Naslov - Pozicija Y:</span>
+                                    <span id="valTitleY" class="text-gold-light font-bold">0px</span>
+                                </div>
+                                <input type="range" id="inputTitleY" min="-400" max="400" value="0" oninput="updateActiveSlideData()" class="w-full accent-sage-green cursor-pointer">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 pt-1">
+                            <div>
+                                <div class="flex justify-between text-[11px] text-stone-400 mb-1">
+                                    <span>Tekst - Pozicija X:</span>
+                                    <span id="valBodyX" class="text-gold-light font-bold">0px</span>
+                                </div>
+                                <input type="range" id="inputBodyX" min="-400" max="400" value="0" oninput="updateActiveSlideData()" class="w-full accent-sage-green cursor-pointer">
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[11px] text-stone-400 mb-1">
+                                    <span>Tekst - Pozicija Y:</span>
+                                    <span id="valBodyY" class="text-gold-light font-bold">0px</span>
+                                </div>
+                                <input type="range" id="inputBodyY" min="-400" max="400" value="0" oninput="updateActiveSlideData()" class="w-full accent-sage-green cursor-pointer">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Frame & Image Upload with Custom Size & Position -->
+                    <div class="pt-2 border-t border-stone-800 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-semibold text-stone-300">Canva Okvir (Frame) i Slika</span>
+                            <select id="inputFrameType" onchange="updateActiveSlideData()" class="bg-stone-950 border border-stone-700 text-stone-300 text-xs rounded-lg p-1.5 outline-none">
+                                <option value="none">Bez okvira / slike</option>
+                                <option value="rounded">Zaobljeni pravougaonik</option>
+                                <option value="circle">Krug sa zlatnim prstenom</option>
+                                <option value="arch">Lučni prozor (Arch)</option>
+                                <option value="card">Mockup Kartica</option>
+                            </select>
+                        </div>
+                        
+                        <div id="imageControls" class="space-y-3">
+                            <input type="file" accept="image/*" onchange="handleImageUpload(event)" class="w-full text-xs text-stone-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-sage-green file:text-white hover:file:bg-sage-dark cursor-pointer">
+                            
+                            <!-- Sliders for Frame Size & Position -->
+                            <div class="bg-stone-950 p-3 rounded-xl border border-stone-800 space-y-2">
+                                <div class="flex justify-between text-xs text-stone-400">
+                                    <span>Veličina okvira (Širina %):</span>
+                                    <span id="valFrameWidth" class="text-gold-light font-bold">80%</span>
+                                </div>
+                                <input type="range" id="inputFrameWidth" min="30" max="100" value="80" oninput="updateActiveSlideData()" class="w-full accent-sage-green cursor-pointer">
+
+                                <div class="flex justify-between text-xs text-stone-400 pt-1">
+                                    <span>Pozicija levo-desno (X):</span>
+                                    <span id="valFramePosX" class="text-gold-light font-bold">Centar</span>
+                                </div>
+                                <input type="range" id="inputFramePosX" min="0" max="100" value="50" oninput="updateActiveSlideData()" class="w-full accent-sage-green cursor-pointer">
+                            </div>
+
+                            <div class="flex gap-2">
+                                <button onclick="applyImageToAllSlides()" class="text-[11px] bg-stone-800 hover:bg-stone-700 text-stone-300 px-2.5 py-1 rounded-lg border border-stone-700 flex-1">Primeni sliku i veličinu na sve</button>
+                                <button onclick="removeImageFromSlide()" class="text-[11px] bg-red-500/10 hover:bg-red-500/20 text-red-400 px-2.5 py-1 rounded-lg border border-stone-500/30">Ukloni sliku</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA Text / Footer -->
+                    <div class="pt-2 border-t border-stone-800">
+                        <label class="text-xs text-stone-400 block mb-1">Poziv na akciju (CTA / Footer)</label>
+                        <input type="text" id="inputCta" oninput="updateActiveSlideData()" class="w-full bg-stone-950 border border-stone-700 rounded-xl p-2.5 text-sm text-stone-200 focus:border-sage-green outline-none">
+                    </div>
+                </div>
+
+                <!-- Instagram Caption Editor -->
+                <div class="bg-stone-900 p-4 rounded-xl border border-stone-800 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-semibold text-gold-light">📋 Instagram Opis Objava (Caption)</span>
+                        <button onclick="copyCaption()" class="text-xs bg-stone-800 hover:bg-stone-700 text-stone-300 px-2.5 py-1 rounded-lg border border-stone-700">Kopiraj opis</button>
