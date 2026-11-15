@@ -162,7 +162,7 @@
             <!-- Slide Editor Controls -->
             <div class="space-y-4 pt-2 border-t border-amber-500/20">
                 <div class="flex justify-between items-center">
-                    <h2 class="text-md font-semibold text-amber-300 font-['Playfair_Display',serif]">✏️ Uređivanje Slajdova</h2>
+                    <h2 class="text-md font-semibold text-amber-300 font-['Playfair_Display',serif]"> Uređivanje Slajdova</h2>
                     <div class="flex gap-1.5">
                         <button onclick="addSlideToCurrent()" class="text-xs bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 px-3 py-1 rounded-lg font-medium border border-amber-500/40">+ Slajd</button>
                         <button onclick="removeCurrentSlide()" class="text-xs bg-red-500/20 text-red-300 hover:bg-red-500/30 px-3 py-1 rounded-lg font-medium border border-red-500/40">Obriši</button>
@@ -180,59 +180,4 @@
                     </div>
                     <div>
                         <label class="text-xs text-amber-200/70 block mb-1">Naslov (Glavni tekst)</label>
-                        <textarea id="inputTitle" rows="2" oninput="updateActiveSlideData()" class="w-full bg-[#181126] border border-amber-500/30 rounded-xl p-2.5 text-sm text-stone-200 focus:border-amber-400 outline-none"></textarea>
-                    </div>
-                    <div>
-                        <label class="text-xs text-amber-200/70 block mb-1">Telo teksta / Opis</label>
-                        <textarea id="inputBody" rows="3" oninput="updateActiveSlideData()" class="w-full bg-[#181126] border border-amber-500/30 rounded-xl p-2.5 text-sm text-stone-200 focus:border-amber-400 outline-none"></textarea>
-                    </div>
-
-                    <!-- Font Size & Position Customizers per Slide -->
-                    <div class="bg-[#181126] p-3.5 rounded-xl border border-amber-500/20 space-y-3">
-                        <p class="text-xs font-semibold text-amber-300 font-['Playfair_Display',serif]">🎛️ Veličina i Pozicija Teksta (ovaj slajd)</p>
-                        
-                        <div class="grid grid-cols-2 gap-3">
-                            <div>
-                                <div class="flex justify-between text-[11px] text-amber-200/70 mb-1">
-                                    <span>Veličina naslova:</span>
-                                    <span id="valTitleSize" class="text-amber-400 font-bold">60px</span>
-                                </div>
-                                <input type="range" id="inputTitleSize" min="32" max="96" value="60" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
-                            </div>
-                            <div>
-                                <div class="flex justify-between text-[11px] text-amber-200/70 mb-1">
-                                    <span>Veličina teksta:</span>
-                                    <span id="valBodySize" class="text-amber-400 font-bold">30px</span>
-                                </div>
-                                <input type="range" id="inputBodySize" min="20" max="48" value="30" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-3 pt-1">
-                            <div>
-                                <div class="flex justify-between text-[11px] text-amber-200/70 mb-1">
-                                    <span>Naslov - Pozicija X (Levo/Desno):</span>
-                                    <span id="valTitleX" class="text-amber-400 font-bold">0px</span>
-                                </div>
-                                <input type="range" id="inputTitleX" min="-100" max="100" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
-                            </div>
-                            <div>
-                                <div class="flex justify-between text-[11px] text-amber-200/70 mb-1">
-                                    <span>Naslov - Pozicija Y (Gore/Dole):</span>
-                                    <span id="valTitleY" class="text-amber-400 font-bold">0px</span>
-                                </div>
-                                <input type="range" id="inputTitleY" min="-100" max="100" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-3 pt-1">
-                            <div>
-                                <div class="flex justify-between text-[11px] text-amber-200/70 mb-1">
-                                    <span>Tekst - Pozicija X (Levo/Desno):</span>
-                                    <span id="valBodyX" class="text-amber-400 font-bold">0px</span>
-                                </div>
-                                <input type="range" id="inputBodyX" min="-100" max="100" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
-                            </div>
-                            <div>
-                                <div class="flex justify-between text-[11px] text-amber-200/70 mb-1">
-                                    <span>Tekst - Pozicija Y (Gore/D
+                        <textarea id="inputTitle" rows="2" oninput="updateActiveSlideData()" class="w-full bg-[#181126] border border-amber-500/30 rounded-xl p-2.5 text-sm text-stone-200 focus:border-amber-400 outline-none"></
