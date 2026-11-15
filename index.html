@@ -100,24 +100,6 @@
                     </div>
                 </div>
 
-                <!-- Font Size Sliders -->
-                <div class="bg-[#130E1F]/90 p-3.5 rounded-xl border border-amber-500/20 space-y-3">
-                    <p class="text-xs font-semibold text-amber-200 font-['Playfair_Display',serif]">Veličina fonta na slajdu:</p>
-                    <div class="space-y-2">
-                        <div class="flex justify-between text-xs text-amber-200/70">
-                            <span>Veličina naslova:</span>
-                            <span id="valTitleSize" class="text-amber-400 font-bold">60px</span>
-                        </div>
-                        <input type="range" id="inputTitleSize" min="36" max="96" value="60" oninput="updateGlobalStyles()" class="w-full accent-amber-500 cursor-pointer">
-
-                        <div class="flex justify-between text-xs text-amber-200/70 pt-1">
-                            <span>Veličina teksta:</span>
-                            <span id="valBodySize" class="text-amber-400 font-bold">30px</span>
-                        </div>
-                        <input type="range" id="inputBodySize" min="20" max="50" value="30" oninput="updateGlobalStyles()" class="w-full accent-amber-500 cursor-pointer">
-                    </div>
-                </div>
-
                 <!-- Custom Color Studio Grid -->
                 <div class="bg-[#130E1F]/90 p-3.5 rounded-xl border border-amber-500/20 space-y-3">
                     <p class="text-xs font-semibold text-amber-200">Slobodan izbor boja:</p>
@@ -203,6 +185,62 @@
                     <div>
                         <label class="text-xs text-amber-200/70 block mb-1">Telo teksta / Opis</label>
                         <textarea id="inputBody" rows="3" oninput="updateActiveSlideData()" class="w-full bg-[#181126] border border-amber-500/30 rounded-xl p-2.5 text-sm text-stone-200 focus:border-amber-400 outline-none"></textarea>
+                    </div>
+
+                    <!-- Font Size & Position Customizers per Slide -->
+                    <div class="bg-[#181126] p-3.5 rounded-xl border border-amber-500/20 space-y-3">
+                        <p class="text-xs font-semibold text-amber-300 font-['Playfair_Display',serif]">🎛️ Veličina i Pozicija Teksta (ovaj slajd)</p>
+                        
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <div class="flex justify-between text-[11px] text-amber-200/70 mb-1">
+                                    <span>Veličina naslova:</span>
+                                    <span id="valTitleSize" class="text-amber-400 font-bold">60px</span>
+                                </div>
+                                <input type="range" id="inputTitleSize" min="32" max="96" value="60" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[11px] text-amber-200/70 mb-1">
+                                    <span>Veličina teksta:</span>
+                                    <span id="valBodySize" class="text-amber-400 font-bold">30px</span>
+                                </div>
+                                <input type="range" id="inputBodySize" min="20" max="48" value="30" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 pt-1">
+                            <div>
+                                <div class="flex justify-between text-[11px] text-amber-200/70 mb-1">
+                                    <span>Naslov - Pozicija X (Levo/Desno):</span>
+                                    <span id="valTitleX" class="text-amber-400 font-bold">0px</span>
+                                </div>
+                                <input type="range" id="inputTitleX" min="-100" max="100" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[11px] text-amber-200/70 mb-1">
+                                    <span>Naslov - Pozicija Y (Gore/Dole):</span>
+                                    <span id="valTitleY" class="text-amber-400 font-bold">0px</span>
+                                </div>
+                                <input type="range" id="inputTitleY" min="-100" max="100" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 pt-1">
+                            <div>
+                                <div class="flex justify-between text-[11px] text-amber-200/70 mb-1">
+                                    <span>Tekst - Pozicija X (Levo/Desno):</span>
+                                    <span id="valBodyX" class="text-amber-400 font-bold">0px</span>
+                                </div>
+                                <input type="range" id="inputBodyX" min="-100" max="100" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[11px] text-amber-200/70 mb-1">
+                                    <span>Tekst - Pozicija Y (Gore/Dole):</span>
+                                    <span id="valBodyY" class="text-amber-400 font-bold">0px</span>
+                                </div>
+                                <input type="range" id="inputBodyY" min="-100" max="100" value="0" oninput="updateActiveSlideData()" class="w-full accent-amber-500 cursor-pointer">
+                            </div>
+                        </div>
                     </div>
                     
                     <!-- Frame & Image Upload with Custom Size & Position -->
@@ -297,10 +335,10 @@
 
                         <!-- Center Content -->
                         <div class="my-auto space-y-6 z-10 flex flex-col justify-center">
-                            <h2 id="renderTitle" class="text-6xl font-bold leading-tight tracking-tight" style="font-family: 'Playfair Display', serif; color: #1A1816; font-size: 60px;">
+                            <h2 id="renderTitle" class="font-bold leading-tight tracking-tight relative transition-all" style="font-family: 'Playfair Display', serif; color: #1A1816; font-size: 60px;">
                                 Naslov karusel objave
                             </h2>
-                            <p id="renderBody" class="text-3xl leading-relaxed opacity-90 font-normal" style="color: #1A1816; font-size: 30px;">
+                            <p id="renderBody" class="leading-relaxed opacity-90 font-normal relative transition-all" style="color: #1A1816; font-size: 30px;">
                                 Opis sadržaja...
                             </p>
 
@@ -366,7 +404,22 @@
 
 #DigitalniProizvodi #MarijanaAIDigitalSoul",
                 slides: [
-                    { badge: "Digitalni Proizvodi", title: "Od ideje do prvog digitalnog proizvoda za 48h", body: "Evo plana za jedan vikend:", cta: "💡 Sačuvaj objavu!", frame: "none", image: "", frameWidth: 80, framePosX: 50 }
+                    { 
+                        badge: "Digitalni Proizvodi", 
+                        title: "Od ideje do prvog digitalnog proizvoda za 48h", 
+                        body: "Evo plana za jedan vikend:", 
+                        cta: "💡 Sačuvaj objavu!", 
+                        frame: "none", 
+                        image: "", 
+                        frameWidth: 80, 
+                        framePosX: 50,
+                        titleSize: 60,
+                        bodySize: 30,
+                        titleX: 0,
+                        titleY: 0,
+                        bodyX: 0,
+                        bodyY: 0
+                    }
                 ]
             }
         ];
@@ -431,20 +484,29 @@
             updateCustomColors();
         }
 
-        function updateGlobalStyles() { 
-            const tSize = document.getElementById('inputTitleSize').value;
-            const bSize = document.getElementById('inputBodySize').value;
-            document.getElementById('valTitleSize').innerText = tSize + 'px';
-            document.getElementById('valBodySize').innerText = bSize + 'px';
-            updatePreview(); 
-        }
+        function updateGlobalStyles() { updatePreview(); }
 
         function addNewCarousel() {
             carousels.push({
                 caption: "🚀 Novi karusel!
 
 #MarijanaAIDigitalSoul",
-                slides: [{ badge: "Novi Proizvod", title: "Naslov", body: "Tekst...", cta: "👉 Saznaj više", frame: "none", image: "", frameWidth: 80, framePosX: 50 }]
+                slides: [{ 
+                    badge: "Novi Proizvod", 
+                    title: "Naslov", 
+                    body: "Tekst...", 
+                    cta: "👉 Saznaj više", 
+                    frame: "none", 
+                    image: "", 
+                    frameWidth: 80, 
+                    framePosX: 50,
+                    titleSize: 60,
+                    bodySize: 30,
+                    titleX: 0,
+                    titleY: 0,
+                    bodyX: 0,
+                    bodyY: 0
+                }]
             });
             currentCarouselIndex = carousels.length - 1;
             currentSlideIndex = 0;
@@ -472,7 +534,19 @@
         function addSlideToCurrent() {
             carousels[currentCarouselIndex].slides.push({
                 badge: `Korak ${carousels[currentCarouselIndex].slides.length + 1}`,
-                title: "Novi naslov", body: "Tekst...", cta: "💡 Sačuvaj", frame: "none", image: "", frameWidth: 80, framePosX: 50
+                title: "Novi naslov", 
+                body: "Tekst...", 
+                cta: "💡 Sačuvaj", 
+                frame: "none", 
+                image: "", 
+                frameWidth: 80, 
+                framePosX: 50,
+                titleSize: 60,
+                bodySize: 30,
+                titleX: 0,
+                titleY: 0,
+                bodyX: 0,
+                bodyY: 0
             });
             currentSlideIndex = carousels[currentCarouselIndex].slides.length - 1;
             renderSlideTabs(); loadSlideToForm(); updatePreview();
@@ -517,6 +591,29 @@
             const posX = slide.framePosX !== undefined ? slide.framePosX : 50;
             document.getElementById('valFramePosX').innerText = posX === 50 ? 'Centar' : (posX < 50 ? `Levo (${posX}%)` : `Desno (${posX}%)`);
 
+            // Font & Position
+            const tSize = slide.titleSize !== undefined ? slide.titleSize : 60;
+            const bSize = slide.bodySize !== undefined ? slide.bodySize : 30;
+            const tX = slide.titleX !== undefined ? slide.titleX : 0;
+            const tY = slide.titleY !== undefined ? slide.titleY : 0;
+            const bX = slide.bodyX !== undefined ? slide.bodyX : 0;
+            const bY = slide.bodyY !== undefined ? slide.bodyY : 0;
+
+            document.getElementById('inputTitleSize').value = tSize;
+            document.getElementById('valTitleSize').innerText = tSize + 'px';
+            document.getElementById('inputBodySize').value = bSize;
+            document.getElementById('valBodySize').innerText = bSize + 'px';
+
+            document.getElementById('inputTitleX').value = tX;
+            document.getElementById('valTitleX').innerText = tX + 'px';
+            document.getElementById('inputTitleY').value = tY;
+            document.getElementById('valTitleY').innerText = tY + 'px';
+
+            document.getElementById('inputBodyX').value = bX;
+            document.getElementById('valBodyX').innerText = bX + 'px';
+            document.getElementById('inputBodyY').value = bY;
+            document.getElementById('valBodyY').innerText = bY + 'px';
+
             document.getElementById('previewIndicator').innerText = `Pregled slajda ${currentSlideIndex + 1} od ${carousels[currentCarouselIndex].slides.length}`;
         }
 
@@ -531,9 +628,23 @@
             slide.frameWidth = parseInt(document.getElementById('inputFrameWidth').value);
             slide.framePosX = parseInt(document.getElementById('inputFramePosX').value);
 
+            slide.titleSize = parseInt(document.getElementById('inputTitleSize').value);
+            slide.bodySize = parseInt(document.getElementById('inputBodySize').value);
+            slide.titleX = parseInt(document.getElementById('inputTitleX').value);
+            slide.titleY = parseInt(document.getElementById('inputTitleY').value);
+            slide.bodyX = parseInt(document.getElementById('inputBodyX').value);
+            slide.bodyY = parseInt(document.getElementById('inputBodyY').value);
+
             document.getElementById('valFrameWidth').innerText = slide.frameWidth + '%';
             const posX = slide.framePosX;
             document.getElementById('valFramePosX').innerText = posX === 50 ? 'Centar' : (posX < 50 ? `Levo (${posX}%)` : `Desno (${posX}%)`);
+
+            document.getElementById('valTitleSize').innerText = slide.titleSize + 'px';
+            document.getElementById('valBodySize').innerText = slide.bodySize + 'px';
+            document.getElementById('valTitleX').innerText = slide.titleX + 'px';
+            document.getElementById('valTitleY').innerText = slide.titleY + 'px';
+            document.getElementById('valBodyX').innerText = slide.bodyX + 'px';
+            document.getElementById('valBodyY').innerText = slide.bodyY + 'px';
 
             updatePreview();
         }
@@ -585,9 +696,6 @@
             const goldColor = document.getElementById('customGold').value;
             const titleFont = document.getElementById('fontTitleSelect').value;
 
-            const tSize = document.getElementById('inputTitleSize').value + 'px';
-            const bSize = document.getElementById('inputBodySize').value + 'px';
-
             const renderSlide = document.getElementById('renderSlide');
             renderSlide.style.background = themes[currentThemeKey]?.gradient ? `linear-gradient(135deg, ${bg1}, ${bg2})` : bg1;
 
@@ -602,12 +710,14 @@
             titleEl.innerText = slide.title || ''; 
             titleEl.style.fontFamily = titleFont; 
             titleEl.style.color = headingColor;
-            titleEl.style.fontSize = tSize;
+            titleEl.style.fontSize = (slide.titleSize || 60) + 'px';
+            titleEl.style.transform = `translate(${slide.titleX || 0}px, ${slide.titleY || 0}px)`;
 
             const bodyEl = document.getElementById('renderBody');
             bodyEl.innerText = slide.body || ''; 
             bodyEl.style.color = textColor;
-            bodyEl.style.fontSize = bSize;
+            bodyEl.style.fontSize = (slide.bodySize || 30) + 'px';
+            bodyEl.style.transform = `translate(${slide.bodyX || 0}px, ${slide.bodyY || 0}px)`;
 
             const ctaEl = document.getElementById('renderCta');
             ctaEl.innerText = slide.cta || ''; ctaEl.style.color = goldColor;
@@ -716,7 +826,13 @@
                         frame: "none",
                         image: "",
                         frameWidth: 80,
-                        framePosX: 50
+                        framePosX: 50,
+                        titleSize: 60,
+                        bodySize: 30,
+                        titleX: 0,
+                        titleY: 0,
+                        bodyX: 0,
+                        bodyY: 0
                     });
                 });
 
