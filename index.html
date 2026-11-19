@@ -1204,7 +1204,11 @@
                 const tLineHeight = (slide.titleLineHeight !== undefined ? slide.titleLineHeight : 1.2) * tSize;
                 const titleFontName = document.getElementById('fontTitleSelect').value.replace(/'/g, "").split(',')[0].trim();
                 ctx.font = `bold ${tSize}px "${titleFontName}", serif`;
-
+if (slide.body) {
+                ctx.fillStyle = textColor;
+                const bSize = slide.bodySize !== undefined ? slide.bodySize : 30;
+                const bodyFontName = document.getElementById('fontBodySelect').value.replace(/'/g, "").split(',')[0].trim();
+                ctx.font = `${bSize}px "${bodyFontName}", sans-serif`;
                 const words = slide.title.split(' ');
                 let line = '';
                 let lines = [];
