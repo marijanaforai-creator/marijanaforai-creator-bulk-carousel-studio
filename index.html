@@ -803,7 +803,15 @@
             const counterEl = document.getElementById('renderCounter');
             counterEl.innerText = `0${currentSlideIndex + 1} / 0${totalSlides}`;
             counterEl.style.color = textColor;
-
+// Body
+            const bodyEl = document.getElementById('renderBody');
+            const bodyFont = document.getElementById('fontBodySelect').value;
+            bodyEl.innerText = slide.body || '';
+            bodyEl.style.fontFamily = bodyFont;
+            bodyEl.style.color = textColor;
+            bodyEl.style.fontSize = (slide.bodySize || 30) + 'px';
+            bodyEl.style.transform = `translate(${slide.bodyX || 0}px, ${slide.bodyY || 0}px)`;
+            bodyEl.style.display = slide.body ? 'block' : 'none';
             // Title
             const titleEl = document.getElementById('renderTitle');
             titleEl.innerText = slide.title || '';
