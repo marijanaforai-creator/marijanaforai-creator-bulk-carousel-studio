@@ -800,11 +800,11 @@
             badgeEl.style.display = slide.badge ? 'inline-block' : 'none';
 
             // Counter
-            const counterEl = document.getElementById('renderCounter');
+            counterEl = document.getElementById('renderCounter');
             counterEl.innerText = `0${currentSlideIndex + 1} / 0${totalSlides}`;
             counterEl.style.color = textColor;
 // Body
-            const bodyEl = document.getElementById('renderBody');
+             bodyEl = document.getElementById('renderBody');
             const bodyFont = document.getElementById('fontBodySelect').value;
             bodyEl.innerText = slide.body || '';
             bodyEl.style.fontFamily = bodyFont;
