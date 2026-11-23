@@ -831,7 +831,7 @@
             titleEl.style.marginBottom = (slide.titleMargin !== undefined ? slide.titleMargin : 24) + 'px';
 
             // Body
-            const bodyEl = document.getElementById('renderBody');
+            bodyEl = document.getElementById('renderBody');
             bodyEl.innerText = slide.body || '';
             bodyEl.style.color = textColor;
             bodyEl.style.fontSize = (slide.bodySize || 30) + 'px';
